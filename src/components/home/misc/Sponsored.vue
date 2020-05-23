@@ -1,11 +1,11 @@
 <template>
-  <v-col cols="2">
+  <v-col cols="2" xl="1">
     <div
       :style="`background-color: ${$store.state.black}`"
       class="sponsored pt-4 pb-4"
     >
       <div class="text-center">
-        <v-btn :color="$store.state.red" rounded dark>
+        <v-btn class="text-capitalize" :color="$store.state.red" rounded dark>
           <v-icon left>
             info
           </v-icon>
@@ -43,6 +43,7 @@ export default {};
 .sponsored {
   border-radius: 5px;
   height: 100%;
+  min-width: 155px;
 }
 p {
     font-size: 14px;

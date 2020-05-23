@@ -7,10 +7,12 @@
             <img src="@/assets/designlogo.png" alt="logo" />
             <b class="align-self-center ml-2">designtarget</b>
           </v-col>
-          <v-col class="text-center" cols="5">
-            <a href="#">Illustrations</a>
-            <a href="#">Images</a>
-            <a href="#">Icons</a>
+          <v-col class="d-flex justify-center align-center" cols="5">
+            <div>
+              <a href="#">Illustrations</a>
+              <a href="#">Images</a>
+              <a href="#">Icons</a>
+            </div>
           </v-col>
           <v-col cols="4" class="d-flex justify-end">
             <v-btn
@@ -33,10 +35,13 @@
 export default {};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/styles";
 a {
   margin: 0 17px;
   color: black !important;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
 </style>

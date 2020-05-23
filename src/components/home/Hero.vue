@@ -1,7 +1,7 @@
 <template>
   <v-container class="hero pa-11">
-    <v-row justify="space-between">
-      <v-col cols="4">
+    <v-row justify="center" justify-md="space-between">
+      <v-col cols="10" md="5" lg="4">
         <h1>Design tools to help you get better.</h1>
         <p class="mt-5">
           designtarget is a curated list of design resources that will help you
@@ -14,7 +14,13 @@
           <input placeholder="Search for a resource" type="text" />
         </div>
       </v-col>
-      <v-col style="position: relative" cols="6">
+      <v-col
+        style="position: relative"
+        class="d-none d-md-block"
+        cols="8"
+        md="7"
+        lg="6"
+      >
         <img
           style="position: absolute;"
           src="@/assets/heroimage.png"
@@ -29,11 +35,15 @@
 export default {};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/styles";
 .hero {
   background-color: #272727;
   color: #ffffff;
   border-radius: 5px;
+  @include xl() {
+    height: 468px;
+  }
 }
 input {
   top: 512px;
@@ -47,6 +57,9 @@ input {
 input::placeholder,
 input {
   color: #616161 !important;
+  @include xl() {
+    font-size: 18px;
+  }
 }
 .hero-input-icon {
   position: absolute;
@@ -54,7 +67,21 @@ input {
   top: 25%;
 }
 img {
-  width: 484px;
-  height: 370px;
+  width: 100%;
+  max-width: 772px;
+  @include xl() {
+    right: 6%;
+  }
+  // height: 370px;
+}
+h1 {
+  @include xl() {
+    font-size: 50px;
+  }
+}
+p {
+  @include xl() {
+    font-size: 24px;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <v-col col="2">
+  <v-col md="2">
     <img src="@/assets/mixkit.png" alt="mixkit" class="d-block" />
     <h3 class="mt-4">Mixkit</h3>
     <p>
@@ -12,9 +12,12 @@
 export default {};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/styles";
 img {
   width: 100%;
+  @include xl() {
+    width: 277px;
+  }
 }
-
 </style>

@@ -10,7 +10,7 @@
         >View All</v-btn
       >
     </div>
-    <v-row>
+    <v-row justify="space-between">
       <SectionCard v-for="item in 4" :key="item" />
       <Sponsored />
     </v-row>
@@ -32,5 +32,14 @@ export default {
 @import "@/styles";
 .v-btn {
   width: 125px;
+  @include xl() {
+    font-size: 18px;
+    width: 145px;
+  }
+}
+h1 {
+  @include xl() {
+    font-size: 50px;
+  }
 }
 </style>
