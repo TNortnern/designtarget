@@ -22,14 +22,16 @@
         </router-link>
       </v-col>
       <v-col cols="6" sm="2">
-        <router-link
-          :to="link.href"
-          class="d-block"
-          v-for="link in linksTwo"
-          :key="link.name"
-        >
-          {{ link.name }}
-        </router-link>
+        <div>
+          <router-link
+            :to="link.href"
+            class="d-inline-block"
+            v-for="link in linksTwo"
+            :key="link.name"
+          >
+            {{ link.name }}
+          </router-link>
+        </div>
       </v-col>
       <v-col sm="4">
         <p>
@@ -77,9 +79,15 @@ footer {
 }
 a {
   color: #ffffff !important;
+  white-space: nowrap;
+  // for breaking lines
+  margin-right: 100%;
   text-decoration: none;
   @include xl() {
     font-size: 24px;
+  }
+  &:hover {
+    color: $red !important;
   }
 }
 h1 {

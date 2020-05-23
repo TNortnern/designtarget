@@ -56,5 +56,8 @@ a {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  &:hover {
+    color: $red !important;
+  }
 }
 </style>
