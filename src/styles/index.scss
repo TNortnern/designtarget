@@ -13,6 +13,11 @@
     @content;
   }
 }
+@mixin md() {
+  @media only screen and (max-width: 1264px) and (min-width: 960px) {
+    @content;
+  }
+}
 
 @mixin xl() {
   @media only screen and (min-width: 1904px) {

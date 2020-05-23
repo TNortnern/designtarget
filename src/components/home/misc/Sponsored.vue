@@ -50,7 +50,7 @@ p {
   font-size: 14px;
 }
 .sponsored__bluehost {
-  @include sm() {
+  @include md() {
     width: 115px;
     margin: 0 auto;
   }

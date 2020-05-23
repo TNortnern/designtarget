@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="11" sm="6" md="2">
+  <v-col cols="11" sm="6" md="3" lg="2">
     <img src="@/assets/mixkit.png" alt="mixkit" class="d-block" />
     <h3 class="mt-4">Mixkit</h3>
     <p>
