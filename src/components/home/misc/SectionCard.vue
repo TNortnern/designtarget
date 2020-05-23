@@ -9,9 +9,14 @@
       <v-row justify="space-between" align="center">
         <h3>{{ item.name }}</h3>
         <div class="align-self-end">
-          <v-btn @mouseover="toggleHovered()" @mouseout="toggleHovered()" icon>
-            <v-icon :color="heartHovered ? 'red' : 'black'">
-              <template v-if="heartHovered">favorite</template>
+          <v-btn
+            @click="favorite()"
+            @mouseover="toggleHovered()"
+            @mouseout="toggleHovered()"
+            icon
+          >
+            <v-icon :color="heartHovered || inFavorites ? 'red' : 'black'">
+              <template v-if="heartHovered || inFavorites">favorite</template>
               <template v-else>favorite_border</template>
             </v-icon>
           </v-btn>
@@ -34,12 +39,27 @@ export default {
   },
   data() {
     return {
-      heartHovered: false
+      heartHovered: false,
+      favorited: []
     };
   },
   methods: {
     toggleHovered() {
-      this.heartHovered = !this.heartHovered;
+      if (!this.inFavorites) {
+        this.heartHovered = !this.heartHovered;
+      }
+    },
+    favorite() {
+      if (!this.inFavorites) {
+        this.favorited = [...this.favorited, this.item];
+      } else {
+        this.favorited = this.favorited.filter(item => item !== this.item);
+      }
+    }
+  },
+  computed: {
+    inFavorites() {
+      return this.favorited.includes(this.item);
     }
   }
 };
