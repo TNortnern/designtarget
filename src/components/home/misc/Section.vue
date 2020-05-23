@@ -1,7 +1,7 @@
 <template>
   <v-container class="section">
-    <div class="d-flex mb-10">
-      <h1 class="d-inline mr-5">Illustrations</h1>
+    <div class="d-flex flex-wrap justify-center justify-md-start mb-10">
+      <h1 class="mr-5">Illustrations</h1>
       <v-btn
         class="text-capitalize align-self-center"
         :color="$store.state.red"
@@ -10,7 +10,11 @@
         >View All</v-btn
       >
     </div>
-    <v-row justify="space-between">
+    <v-row
+      justify-md="space-between"
+      justify-lg="space-between"
+      justify="center"
+    >
       <SectionCard v-for="item in 4" :key="item" />
       <Sponsored />
     </v-row>

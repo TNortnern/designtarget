@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="2" xl="1">
+  <v-col cols="11" sm="12" lg="2" xl="1">
     <div
       :style="`background-color: ${$store.state.black}`"
       class="sponsored pt-4 pb-4"
@@ -14,7 +14,7 @@
       </div>
       <div
         class="d-flex flex-column align-center justify-center
-         white--text mt-3"
+         white--text mt-3 sponsored__bluehost"
         style="background-color: #4474BA; height: 70px;"
       >
         <v-icon color="white">
@@ -39,13 +39,20 @@
 export default {};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/styles";
 .sponsored {
   border-radius: 5px;
   height: 100%;
   min-width: 155px;
 }
 p {
-    font-size: 14px;
+  font-size: 14px;
+}
+.sponsored__bluehost {
+  @include sm() {
+    width: 115px;
+    margin: 0 auto;
+  }
 }
 </style>
