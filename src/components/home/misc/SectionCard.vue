@@ -53,4 +53,10 @@ img {
     width: 277px;
   }
 }
+h3 {
+  font-size: 17px;
+}
+.row {
+  flex-wrap: nowrap;
+}
 </style>

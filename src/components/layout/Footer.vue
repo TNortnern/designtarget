@@ -36,7 +36,12 @@
           Sign up to our newsletter and get notified whenever a new resource is
           released.
         </p>
-        <v-text-field outlined />
+        <div class="footer__subscribe">
+          <input class="pl-8" type="text" placeholder="Enter e-mail address" />
+          <v-btn class="text-capitalize" :color="$store.state.red" dark rounded>
+            Subscribe
+          </v-btn>
+        </div>
       </v-col>
     </v-row>
   </footer>
@@ -86,5 +91,28 @@ p {
   @include xl() {
     font-size: 24px;
   }
+}
+.footer__subscribe {
+  position: relative;
+  max-width: 411px;
+  input {
+    width: 100%;
+    height: 36px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 2px 6px #00000021;
+    border-radius: 300px;
+  }
+}
+.v-btn {
+  @include xl() {
+    width: 145px;
+  }
+  @include sm() {
+    width: auto;
+  }
+  position: absolute;
+  width: 125px;
+  right: 0%;
+  top: 0%;
 }
 </style>
