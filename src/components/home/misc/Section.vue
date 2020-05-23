@@ -1,12 +1,13 @@
 <template>
   <v-container class="section">
     <div class="d-flex flex-wrap justify-center justify-md-start mb-10">
-      <h1 class="mr-5">Illustrations</h1>
+      <h1 class="mr-5">{{ name }}</h1>
       <v-btn
         class="text-capitalize align-self-center"
         :color="$store.state.red"
         dark
         rounded
+        :to="href"
         >View All</v-btn
       >
     </div>
@@ -15,7 +16,7 @@
       justify-lg="space-between"
       justify="center"
     >
-      <SectionCard v-for="item in 4" :key="item" />
+      <SectionCard v-for="item in items" :key="item.name" :item="item" />
       <Sponsored />
     </v-row>
   </v-container>
@@ -28,6 +29,20 @@ export default {
   components: {
     SectionCard,
     Sponsored
+  },
+  props: {
+    name: {
+      type: String,
+      default: ""
+    },
+    href: {
+      type: String,
+      default: ""
+    },
+    items: {
+      type: Array,
+      default: () => {}
+    }
   }
 };
 </script>
