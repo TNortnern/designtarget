@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app color="transparent" light elevation="0">
+    <v-app-bar color="transparent" light elevation="0">
       <v-container>
         <v-row>
           <v-col class="d-flex" cols="3">
@@ -18,7 +18,7 @@
               rounded
               width="175px"
               dark
-              color="#FF2121"
+              :color="$store.state.red"
             >
               Liked Resources
             </v-btn>

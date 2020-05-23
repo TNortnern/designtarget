@@ -17,6 +17,7 @@ export default {
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import "@/styles";
 #app {
   font-family: "Karla", sans-serif !important;
   background-color: #f6f6f6;
