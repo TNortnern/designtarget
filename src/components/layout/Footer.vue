@@ -4,14 +4,14 @@
     class="footer container pa-10"
   >
     <v-row class="text-center text-sm-left" justify="center" justify-sm="start">
-      <v-col cols="12" sm="5" xl="4">
+      <v-col cols="12" sm="4">
         <h1>designtarget</h1>
         <p class="mt-5">
           designtarget is a curated list of design resources that will help you
           speed up your workflow.
         </p>
       </v-col>
-      <v-col cols="6" sm="2" xl="2">
+      <v-col cols="6" sm="2">
         <router-link
           :to="link.href"
           class="d-block"
@@ -21,7 +21,7 @@
           {{ link.name }}
         </router-link>
       </v-col>
-      <v-col cols="6" sm="2" xl="2">
+      <v-col cols="6" sm="2">
         <router-link
           :to="link.href"
           class="d-block"
@@ -31,7 +31,7 @@
           {{ link.name }}
         </router-link>
       </v-col>
-      <v-col sm="3" xl="3">
+      <v-col sm="4">
         <p>
           Sign up to our newsletter and get notified whenever a new resource is
           released.
@@ -65,6 +65,10 @@ export default {
 footer {
   border-radius: 5px;
   color: #ffffff;
+  @include xl() {
+    min-width: 1679px;
+    margin-left: 126px;
+  }
 }
 a {
   color: #ffffff !important;
