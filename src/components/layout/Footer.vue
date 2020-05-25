@@ -1,8 +1,8 @@
 <template>
   <v-footer
     :style="`background-color: ${$store.state.black}`"
-    class="footer pa-4 pl-8 pr-8 pa-sm-10"
-    :absolute="absolute"
+    class="footer pa-4 pl-8 pr-8 pa-sm-10 container"
+    absolute
     dark
   >
     <v-row class="text-center text-sm-left" justify="center" justify-sm="start">

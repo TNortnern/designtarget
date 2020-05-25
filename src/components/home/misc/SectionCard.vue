@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="11" sm="6" md="3" lg="2">
+  <v-col cols="11" sm="6" md="3" :lg="lg" xl="2">
     <img
       :src="require(`@/assets/${item.image}.png`)"
       alt="mixkit"
@@ -35,6 +35,10 @@ export default {
     item: {
       type: Object,
       default: () => {}
+    },
+    lg: {
+      type: [Number, String],
+      default: 2
     }
   },
   data() {

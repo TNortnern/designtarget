@@ -2,7 +2,9 @@
   <div>
     <AppBar />
     <slot />
+    <v-container>
     <Footer :absolute="absolute" />
+    </v-container>
   </div>
 </template>
 
