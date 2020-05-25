@@ -3,7 +3,7 @@ $black: #272727;
 .section-spacing {
   margin-top: 71px;
 }
-
+// Vuetify Breakpoints start
 @mixin xs() {
   @media only screen and (max-width: 600px) {
     @content;
@@ -32,3 +32,5 @@ $black: #272727;
     max-width: 1640px !important;
   }
 }
+
+// Vuetify Breakpoints end

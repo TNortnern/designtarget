@@ -1,33 +1,50 @@
 <template>
   <footer
     :style="`background-color: ${$store.state.black}`"
-    class="footer container pa-10"
+    class="footer pa-4 pl-8 pr-8 pa-sm-10"
   >
-    <v-row class="text-center text-sm-left" justify="center" justify-sm="start">
-      <v-col cols="12" sm="4">
+    <v-row
+      class="text-center text-sm-left"
+      justify="center"
+      justify-sm="start"
+    >
+      <v-col
+        cols="12"
+        sm="4"
+      >
         <h1>designtarget</h1>
         <p class="mt-5">
           designtarget is a curated list of design resources that will help you
           speed up your workflow.
         </p>
       </v-col>
-      <v-col cols="6" sm="2">
-        <router-link
-          :to="link.href"
-          class="d-block"
+      <v-col
+        cols="6"
+        sm="2"
+      >
+        <div
           v-for="link in linksOne"
           :key="link.name"
         >
-          {{ link.name }}
-        </router-link>
-      </v-col>
-      <v-col cols="6" sm="2">
-        <div>
           <router-link
+            class="d-i-block"
             :to="link.href"
-            class="d-inline-block"
-            v-for="link in linksTwo"
-            :key="link.name"
+          >
+            {{ link.name }}
+          </router-link>
+        </div>
+      </v-col>
+      <v-col
+        cols="6"
+        sm="2"
+      >
+        <div
+          v-for="link in linksTwo"
+          :key="link.name"
+        >
+          <router-link
+            class="d-i-block"
+            :to="link.href"
           >
             {{ link.name }}
           </router-link>
@@ -39,8 +56,17 @@
           released.
         </p>
         <div class="footer__subscribe">
-          <input class="pl-8" type="text" placeholder="Enter e-mail address" />
-          <v-btn class="text-capitalize" :color="$store.state.red" dark rounded>
+          <input
+            class="pl-8"
+            type="text"
+            placeholder="Enter e-mail address"
+          />
+          <v-btn
+            class="text-capitalize"
+            :color="$store.state.red"
+            dark
+            rounded
+          >
             Subscribe
           </v-btn>
         </div>
@@ -80,8 +106,6 @@ footer {
 a {
   color: #ffffff !important;
   white-space: nowrap;
-  // for breaking lines
-  margin-right: 100%;
   text-decoration: none;
   @include xl() {
     font-size: 24px;
@@ -111,12 +135,22 @@ p {
     border-radius: 300px;
   }
 }
+  @mixin relativeButton () {
+    position: relative;
+    margin-top: 10px;
+  }
 .v-btn {
   @include xl() {
     width: 145px;
   }
   @include sm() {
     width: auto;
+  }
+  @include xs() {
+    @include relativeButton();
+  }
+  @include sm() {
+    @include relativeButton();
   }
   position: absolute;
   width: 125px;
