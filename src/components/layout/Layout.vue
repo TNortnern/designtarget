@@ -2,7 +2,7 @@
   <div>
     <AppBar />
     <slot />
-    <Footer />
+    <Footer :absolute="absolute" />
   </div>
 </template>
 
@@ -13,6 +13,12 @@ export default {
   components: {
     AppBar,
     Footer
+  },
+  props: {
+    absolute: {
+      type: Boolean,
+      default: false
+    }
   }
 };
 </script>

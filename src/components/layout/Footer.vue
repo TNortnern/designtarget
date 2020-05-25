@@ -1,51 +1,28 @@
 <template>
-  <footer
+  <v-footer
     :style="`background-color: ${$store.state.black}`"
     class="footer pa-4 pl-8 pr-8 pa-sm-10"
+    :absolute="absolute"
+    dark
   >
-    <v-row
-      class="text-center text-sm-left"
-      justify="center"
-      justify-sm="start"
-    >
-      <v-col
-        cols="12"
-        sm="4"
-      >
+    <v-row class="text-center text-sm-left" justify="center" justify-sm="start">
+      <v-col cols="12" sm="4">
         <h1>designtarget</h1>
         <p class="mt-5">
           designtarget is a curated list of design resources that will help you
           speed up your workflow.
         </p>
       </v-col>
-      <v-col
-        cols="6"
-        sm="2"
-      >
-        <div
-          v-for="link in linksOne"
-          :key="link.name"
-        >
-          <router-link
-            class="d-i-block"
-            :to="link.href"
-          >
+      <v-col cols="6" sm="2">
+        <div v-for="link in linksOne" :key="link.name">
+          <router-link class="d-i-block" :to="link.href">
             {{ link.name }}
           </router-link>
         </div>
       </v-col>
-      <v-col
-        cols="6"
-        sm="2"
-      >
-        <div
-          v-for="link in linksTwo"
-          :key="link.name"
-        >
-          <router-link
-            class="d-i-block"
-            :to="link.href"
-          >
+      <v-col cols="6" sm="2">
+        <div v-for="link in linksTwo" :key="link.name">
+          <router-link class="d-i-block" :to="link.href">
             {{ link.name }}
           </router-link>
         </div>
@@ -56,23 +33,14 @@
           released.
         </p>
         <div class="footer__subscribe">
-          <input
-            class="pl-8"
-            type="text"
-            placeholder="Enter e-mail address"
-          />
-          <v-btn
-            class="text-capitalize"
-            :color="$store.state.red"
-            dark
-            rounded
-          >
+          <input class="pl-8" type="text" placeholder="Enter e-mail address" />
+          <v-btn class="text-capitalize" :color="$store.state.red" dark rounded>
             Subscribe
           </v-btn>
         </div>
       </v-col>
     </v-row>
-  </footer>
+  </v-footer>
 </template>
 
 <script>
@@ -89,7 +57,13 @@ export default {
       { name: "Facebook", href: "#facebook" },
       { name: "Twitter", href: "#twitter" }
     ]
-  })
+  }),
+  props: {
+    absolute: {
+      type: Boolean,
+      default: false
+    }
+  }
 };
 </script>
 
@@ -135,10 +109,10 @@ p {
     border-radius: 300px;
   }
 }
-  @mixin relativeButton () {
-    position: relative;
-    margin-top: 10px;
-  }
+@mixin relativeButton() {
+  position: relative;
+  margin-top: 10px;
+}
 .v-btn {
   @include xl() {
     width: 145px;
