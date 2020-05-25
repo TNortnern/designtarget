@@ -4,31 +4,47 @@
     <v-app-bar color="transparent" light elevation="0">
       <v-container>
         <v-row>
-          <v-col class="d-flex" cols="3">
-            <img src="@/assets/designlogo.png" alt="logo" />
-            <b class="align-self-center ml-2">designtarget</b>
+          <v-col class="d-flex appbar__logo" cols="3">
+            <img
+              @click="$router.push('/')"
+              src="@/assets/designlogo.png"
+              alt="logo"
+            />
+            <b @click="$router.push('/')" class="align-self-center ml-2"
+              >designtarget</b
+            >
           </v-col>
           <MobileNavigation />
-          <v-col class="d-none d-md-flex justify-center align-center" cols="5">
+          <v-col
+            class="d-none d-md-flex justify-center align-center collection__links"
+            cols="5"
+          >
             <div>
-              <a
+              <router-link
+                class="appbar__link"
                 v-for="link in $store.state.links"
                 :key="link.name"
-                :href="link.href"
-                >{{ link.name }}</a
+                :to="link.href"
+                active-class="appbar__link--active"
+                >{{ link.name }}</router-link
               >
             </div>
           </v-col>
           <v-col cols="4" class="d-none d-md-flex justify-end">
+            <router-link
+              class="appbar__link appbar__link--login mr-8"
+              :to="$store.state.loginLink.href"
+            >
+              {{ $store.state.loginLink.name }}
+            </router-link>
             <v-btn
               class="text-capitalize white--text"
               rounded
-              width="175px"
               dark
               :color="$store.state.red"
-              :to="$store.state.buttonLink.href"
+              :to="$store.state.signUpLink.href"
             >
-              {{ $store.state.buttonLink.name }}
+              {{ $store.state.signUpLink.name }}
             </v-btn>
           </v-col>
         </v-row>
@@ -50,14 +66,47 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/styles";
-a {
+.appbar__link {
   margin: 0 17px;
-  color: black !important;
+  color: black ;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   &:hover {
-    color: $red !important;
+    color: $red;
+  }
+}
+.appbar__link--login {
+  color: $red;
+  &:hover {
+    color: darken($red, 13%);
+  }
+}
+.appbar__link--active {
+  background-color: $red;
+  color: white;
+  padding: 10px;
+  border-radius: 2px;
+  display: inline-flex;
+  justify-content: center;
+  &:hover {
+    color: white;
+  }
+}
+.appbar__logo {
+  img,
+  b {
+    cursor: pointer;
+  }
+}
+.collection__links {
+  position: relative;
+  left: 4%;
+}
+.v-btn {
+  width: 124px;
+  @include xl() {
+    width: 145px;
   }
 }
 </style>

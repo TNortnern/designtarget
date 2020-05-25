@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Section name="Images" href="#images" :items="items" />
+    <Section name="Images" href="collection/images" :items="items" />
   </div>
 </template>
 

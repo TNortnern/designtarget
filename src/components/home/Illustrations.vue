@@ -1,6 +1,10 @@
 <template>
-  <div style="margin-top: 120px;">
-    <Section name="Illustrations" href="#illustrations" :items="items" />
+  <div class="illustrations">
+    <Section
+      name="Illustrations"
+      href="collection/illustrations"
+      :items="items"
+    />
   </div>
 </template>
 
@@ -40,4 +44,16 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "@/styles";
+$marginTop: 30px;
+.illustrations {
+  margin-top: 120px;
+  @include sm() {
+    margin-top: $marginTop;
+  }
+  @include xs() {
+    margin-top: $marginTop;
+  }
+}
+</style>

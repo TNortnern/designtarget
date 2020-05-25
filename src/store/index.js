@@ -8,14 +8,22 @@ export default new Vuex.Store({
     red: "#FF2121",
     black: "#272727",
     links: [
-      { name: "Illustrations", href: "#p", icon: "picture_in_picture" },
-      { name: "Images", href: "#s", icon: "photo" },
-      { name: "Icons", href: "#i", icon: "error_outline" }
+      {
+        name: "Illustrations",
+        href: "/collection/illustrations",
+        icon: "picture_in_picture"
+      },
+      { name: "Images", href: "/collecton/images", icon: "photo" },
+      { name: "Icons", href: "/collection/icons", icon: "error_outline" }
     ],
     buttonLink: {
       name: "Liked Resources",
       href: "#"
     },
+
+    loginLink: { name: "Login", href: "/login" },
+    signUpLink: { name: "Sign Up", href: "/signup", button: true },
+
     drawer: false
   },
   mutations: {
