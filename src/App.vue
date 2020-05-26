@@ -16,11 +16,29 @@ export default {
   },
   mounted() {
     window.addEventListener("resize", this.setFooterHeight);
-    this.footerHeight = document.querySelector("footer").offsetHeight;
+    // here we want the footer to always be at the bottom so we set the padding bottom equal to it's height
+    // avoid setting on login and signup since these pages don't have footers
+    if (this.routeName !== "login" && this.routeName !== "signup") {
+      this.footerHeight = document.querySelector("footer").offsetHeight;
+    }
   },
   methods: {
     setFooterHeight() {
-      this.footerHeight = document.querySelector("footer").offsetHeight;
+      const footer = document.querySelector("footer").offsetHeight;
+      this.footerHeight = footer;
+    }
+  },
+  watch: {
+    $route(to) {
+      // avoid setting on login and signup since these pages don't have footers
+      if (to.name !== "login" && to.name !== "signup") {
+        this.setFooterHeight();
+      }
+    }
+  },
+  computed: {
+    routeName() {
+      return this.$route.name;
     }
   }
 };

@@ -13,7 +13,7 @@ export default new Vuex.Store({
         href: "/collection/illustrations",
         icon: "picture_in_picture"
       },
-      { name: "Images", href: "/collecton/images", icon: "photo" },
+      { name: "Images", href: "/collection/images", icon: "photo" },
       { name: "Icons", href: "/collection/icons", icon: "error_outline" }
     ],
     buttonLink: {

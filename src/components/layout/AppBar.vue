@@ -5,14 +5,8 @@
       <v-container>
         <v-row>
           <v-col class="d-flex appbar__logo" cols="3">
-            <img
-              @click="$router.push('/')"
-              src="@/assets/designlogo.png"
-              alt="logo"
-            />
-            <b @click="$router.push('/')" class="align-self-center ml-2"
-              >designtarget</b
-            >
+            <img @click="goHome()" src="@/assets/designlogo.png" alt="logo" />
+            <b @click="goHome()" class="align-self-center ml-2">designtarget</b>
           </v-col>
           <MobileNavigation />
           <v-col
@@ -60,6 +54,13 @@ export default {
   components: {
     MobileNavigation,
     Drawer
+  },
+  methods: {
+    goHome() {
+      if (this.$route.name !== "Home") {
+        this.$router.push("/");
+      }
+    }
   }
 };
 </script>
@@ -68,7 +69,7 @@ export default {
 @import "@/styles";
 .appbar__link {
   margin: 0 17px;
-  color: black ;
+  color: black;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -83,14 +84,16 @@ export default {
   }
 }
 .appbar__link--active {
-  background-color: $red;
-  color: white;
-  padding: 10px;
-  border-radius: 2px;
-  display: inline-flex;
-  justify-content: center;
+  // background-color: $red;
+  // color: white;
+  // padding: 10px;
+  // border-radius: 2px;
+  // display: inline-flex;
+  // justify-content: center;
+  font-weight: bold;
   &:hover {
-    color: white;
+    font-weight: bold;
+    color: black;
   }
 }
 .appbar__logo {

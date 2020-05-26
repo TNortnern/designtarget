@@ -19,20 +19,26 @@ const routes = [
   },
   {
     path: "*",
+    name: "NotFound",
     component: Home
   },
   {
     path: "/login",
+    name: "login",
     component: Login
   },
   {
     path: "/signup",
+    name: "signup",
     component: SignUp
   }
 ];
 
 const router = new VueRouter({
   mode: "history",
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
   base: process.env.BASE_URL,
   routes
 });

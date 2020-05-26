@@ -1,16 +1,19 @@
 <template>
-  <AuthLayout>
-    <v-text-field label="Email" placeholder="Email" outlined />
-    <v-text-field label="Password" placeholder="Password" outlined />
-    <v-btn :color="$store.state.red" block dark rounded>
-      Login
-    </v-btn>
-    <div class="text-center mt-5">
-      <span
-        >Don't have an account?
-        <b @click="$router.push('signup')">Sign Up</b></span
-      >
-    </div>
+  <AuthLayout
+    buttonName="Login"
+    :cta="{
+      name: 'Sign Up',
+      message: 'Don\'t have an account?',
+      route: 'signup'
+    }"
+  >
+    <v-text-field v-model="email" label="Email" placeholder="Email" outlined />
+    <v-text-field
+      v-model="password"
+      label="Password"
+      placeholder="Password"
+      outlined
+    />
   </AuthLayout>
 </template>
 
@@ -18,6 +21,12 @@
 import AuthLayout from "@/components/auth/AuthLayout";
 
 export default {
+  data() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
   components: {
     AuthLayout
   }
@@ -33,12 +42,6 @@ export default {
   }
   @include xs() {
     width: 100%;
-  }
-}
-b {
-  cursor: pointer;
-  &:hover {
-    color: lighten(black, 34%);
   }
 }
 </style>
