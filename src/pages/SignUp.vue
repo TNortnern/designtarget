@@ -7,13 +7,24 @@
       route: 'login'
     }"
   >
-    <v-text-field v-model="email" label="Email" placeholder="Email" outlined />
-    <v-text-field
-      v-model="password"
-      label="Password"
-      placeholder="Password"
-      outlined
-    />
+    <ValidationProvider v-slot="{ errors }" name="Email" rules="required|email">
+      <v-text-field
+        v-model="email"
+        label="Email"
+        placeholder="Email"
+        :error-messages="errors"
+        outlined
+      />
+    </ValidationProvider>
+    <ValidationProvider v-slot="{ errors }" name="Password" rules="required">
+      <v-text-field
+        v-model="password"
+        label="Password"
+        :error-messages="errors"
+        placeholder="Password"
+        outlined
+      />
+    </ValidationProvider>
   </AuthLayout>
 </template>
 

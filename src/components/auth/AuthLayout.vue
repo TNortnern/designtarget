@@ -31,7 +31,9 @@
         </form>
       </v-col>
     </v-row>
-    <Footer style="opacity: 0; position: fixed; bottom: 0; left: 0" />
+    <Footer
+      style="opacity: 0; position: fixed; bottom: 0; left: 0; z-index:-99;"
+    />
   </div>
 </template>
 
