@@ -64,7 +64,9 @@ export default {
   background-color: white !important;
   overflow-y: hidden;
   height: 100vh;
+  // overflow from hidden footer won't show with this
   position: fixed;
+  width: 100%;
   @include xs() {
     overflow: auto;
   }
