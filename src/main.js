@@ -6,6 +6,7 @@ import vuetify from "./plugins/vuetify";
 import CollectionGrid from "./components/common/CollectionGrid.vue";
 import Mixins from "./mixins";
 import VeeValidate from "./plugins/vee-validate";
+import vueHeadful from "vue-headful";
 
 Vue.config.productionTip = false;
 Vue.mixin({
@@ -13,6 +14,7 @@ Vue.mixin({
     ...Mixins.methods
   }
 });
+Vue.component("vue-headful", vueHeadful);
 Vue.component("CollectionGrid", CollectionGrid);
 
 new Vue({

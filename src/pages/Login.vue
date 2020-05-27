@@ -7,6 +7,7 @@
       route: 'signup'
     }"
   >
+    <vue-headful title="Login" description="Design Target login page" />
     <ValidationProvider v-slot="{ errors }" name="Email" rules="required|email">
       <v-text-field
         v-model="email"
