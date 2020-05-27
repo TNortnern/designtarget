@@ -1,5 +1,9 @@
 <template>
   <Layout>
+    <vue-headful
+      title="Home"
+      description="View all of design target's resources"
+    />
     <Hero />
     <Illustrations />
     <Images />

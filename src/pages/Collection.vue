@@ -1,5 +1,9 @@
 <template>
   <Layout>
+    <vue-headful
+      :title="`Collection - ${capitalize(title)}`"
+      :description="`Design Target's collection of ${capitalize(title)}`"
+    />
     <v-container>
       <h1 class="mb-3">{{ capitalize(title) }}</h1>
       <CollectionGrid :collection="items" />
