@@ -6,12 +6,13 @@
     />
     <Hero />
     <Section
-      v-for="category in topFour"
+      v-for="(category, index) in topFour"
       :key="category.id"
       :name="category.name"
       :href="`collection/${category.name}`"
       :items="category.topFour"
       :category="category"
+      :class="index === 0 ? 'home__first-category' : ''"
     />
     <Illustrations />
     <Images />
@@ -43,4 +44,16 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "@/styles";
+$marginTop: 30px;
+.home__first-category {
+  margin-top: 120px;
+  @include sm() {
+    margin-top: $marginTop;
+  }
+  @include xs() {
+    margin-top: $marginTop;
+  }
+}
+</style>

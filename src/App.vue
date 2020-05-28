@@ -16,7 +16,10 @@ export default {
     };
   },
   apollo: {
-    categories: TOP_FOUR_QUERY
+    categories: {
+      query: TOP_FOUR_QUERY,
+      skip: true
+    }
   },
   mounted() {
     window.addEventListener("resize", this.setFooterHeight);
@@ -25,7 +28,7 @@ export default {
     if (this.routeName !== "login" && this.routeName !== "signup") {
       this.footerHeight = document.querySelector("footer").offsetHeight;
     }
-    this.setTopFour();
+    if (!this.$store.state.categories.topFour.length) this.setTopFour();
   },
   methods: {
     setFooterHeight() {

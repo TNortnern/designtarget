@@ -1,7 +1,14 @@
 <template>
-  <v-row>
-    <SectionCard v-for="(item, i) in collection" :key="i" :item="item" lg="3" />
-  </v-row>
+  <div>
+    <v-row v-if="collection.length">
+      <SectionCard
+        v-for="(item, i) in collection"
+        :key="i"
+        :item="item"
+        lg="3"
+      />
+    </v-row>
+  </div>
 </template>
 
 <script>

@@ -1,10 +1,12 @@
 <template>
   <v-col cols="11" sm="6" md="3" :lg="lg" xl="2">
-    <img
-      :src="item.image.url"
-      :alt="item.image.alt || item.name"
-      class="d-block"
-    />
+    <a :href="`//${item.url}`" target="__blank">
+      <img
+        :src="item.image.url"
+        :alt="item.image.alt || item.name"
+        class="d-block section-card__clickable"
+      />
+    </a>
     <v-container>
       <v-row justify="space-between" align="center">
         <h3>{{ item.name }}</h3>
@@ -82,5 +84,14 @@ h3 {
 }
 .row {
   flex-wrap: nowrap;
+}
+.section-card__clickable {
+  transition: 0.25s ease;
+  opacity: 0.91;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+    transform: scale(1.02);
+  }
 }
 </style>
