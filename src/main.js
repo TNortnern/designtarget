@@ -6,6 +6,7 @@ import vuetify from "./plugins/vuetify";
 import CollectionGrid from "./components/common/CollectionGrid.vue";
 import Mixins from "./mixins";
 import VeeValidate from "./plugins/vee-validate";
+import apolloProvider from "./plugins/apolloProvider";
 import vueHeadful from "vue-headful";
 
 Vue.config.productionTip = false;
@@ -21,6 +22,7 @@ new Vue({
   router,
   store,
   VeeValidate,
+  apolloProvider,
   vuetify,
   render: h => h(App)
 }).$mount("#app");
