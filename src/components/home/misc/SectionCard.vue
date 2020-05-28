@@ -1,8 +1,8 @@
 <template>
   <v-col cols="11" sm="6" md="3" :lg="lg" xl="2">
     <img
-      :src="require(`@/assets/${item.image}.png`)"
-      alt="mixkit"
+      :src="item.image.url"
+      :alt="item.image.alt || item.name"
       class="d-block"
     />
     <v-container>

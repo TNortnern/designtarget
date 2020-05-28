@@ -7,12 +7,16 @@
 </template>
 
 <script>
+import { TOP_FOUR_QUERY } from "@/graphql/queries/resources";
 export default {
   name: "App",
   data() {
     return {
       footerHeight: 0
     };
+  },
+  apollo: {
+    categories: TOP_FOUR_QUERY
   },
   mounted() {
     window.addEventListener("resize", this.setFooterHeight);
@@ -21,11 +25,24 @@ export default {
     if (this.routeName !== "login" && this.routeName !== "signup") {
       this.footerHeight = document.querySelector("footer").offsetHeight;
     }
+    this.setTopFour();
   },
   methods: {
     setFooterHeight() {
       const footer = document.querySelector("footer").offsetHeight;
       this.footerHeight = footer;
+    },
+    async setTopFour() {
+      await this.$apollo
+        .query({
+          query: TOP_FOUR_QUERY
+        })
+        .then(({ data }) => {
+          this.$store.commit("setTopFour", data.categories);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   watch: {

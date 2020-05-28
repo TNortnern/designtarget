@@ -3,11 +3,11 @@
     <div class="d-flex flex-wrap justify-center justify-md-start mb-10">
       <h1 class="mr-5">{{ name }}</h1>
       <v-btn
+        @click="viewCategory()"
         class="text-capitalize align-self-center"
         :color="$store.state.red"
         dark
         rounded
-        :to="href"
         >View All</v-btn
       >
     </div>
@@ -16,7 +16,7 @@
       justify-lg="space-between"
       justify="center"
     >
-      <SectionCard v-for="item in items" :key="item.name" :item="item" />
+      <SectionCard v-for="item in items" :key="item.id" :item="item" />
       <Sponsored />
     </v-row>
   </v-container>
@@ -42,6 +42,16 @@ export default {
     items: {
       type: Array,
       default: () => {}
+    },
+    category: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  methods: {
+    viewCategory() {
+      this.$store.commit("setCurrent", this.category);
+      this.$router.push(this.href);
     }
   }
 };

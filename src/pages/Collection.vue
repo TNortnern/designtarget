@@ -1,11 +1,11 @@
 <template>
   <Layout>
     <vue-headful
-      :title="`Collection - ${capitalize(title)}`"
-      :description="`Design Target's collection of ${capitalize(title)}`"
+      :title="`Collection - ${capitalize(current.name)}`"
+      :description="`Design Target's collection of ${capitalize(current.name)}`"
     />
     <v-container>
-      <h1 class="mb-3">{{ capitalize(title) }}</h1>
+      <h1 class="mb-3">{{ capitalize(current.name) }}</h1>
       <CollectionGrid :collection="items" />
     </v-container>
   </Layout>
@@ -63,8 +63,8 @@ export default {
     Layout
   },
   computed: {
-    title() {
-      return this.$route.params.collection;
+    current() {
+      return this.$store.state.categories.current;
     }
   }
 };
