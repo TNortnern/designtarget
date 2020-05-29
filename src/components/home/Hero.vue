@@ -15,7 +15,7 @@
         </div>
       </v-col>
       <v-col
-        style="position: relative"
+        style="position: relative; z-index: 1"
         class="d-none d-md-block"
         cols="8"
         md="7"

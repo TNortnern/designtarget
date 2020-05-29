@@ -50,11 +50,15 @@ export default {
         .query({
           query: USER_QUERY,
           variables: {
-            id: "5ecfa7eacb82c91c98600e79"
+            id: "5ecfa7eacb82c91c9860d0e79"
           }
         })
         .then(({ data }) => {
           this.$store.commit("setUser", data.user);
+        })
+        .catch(err => {
+          console.log('err', err)
+          this.$store.commit("setUser", null);
         });
     }
   },

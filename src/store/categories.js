@@ -1,30 +1,70 @@
 import { apolloClient } from "@/plugins/apolloProvider";
 import { TOP_FOUR_QUERY, CATEGORY_QUERY } from "../graphql/queries/resources";
+import {
+  CREATE_RESOURCE,
+  DELETE_RESOURCE
+} from "../graphql/mutations/resources";
+import {
+  CREATE_CATEGORY,
+  DELETE_CATEGORY
+} from "../graphql/mutations/categories";
 const state = () => ({
   topFour: [],
   current: null,
-  allResources: []
+  allResources: [],
+  loading: { name: "", value: false },
+  message: { text: "", name: "" }
 });
 
 const actions = {
-  // updateResource({ state, commit }, data) {
-  //   const topFour = state.topFour;
-  //   const allResources = state.allResources;
-  //   let topFourResource = topFour.find(resource => resource.id === data.id);
-  //   let resource = allResources.find(resource => resource.id === data.id);
-  //   console.log("before update", allResources);
-  //   if (topFourResource) {
-  //     topFourResource = data;
-  //     commit("setTopFour", topFour);
-  //   }
-  //   if (resource) {
-  //     let getsFound = allResources[allResources.indexOf(resource)];
-  //     console.log("didfubd", getsFound);
-  //     getsFound = data;
-  //     console.log("after update", allResources);
-  //     commit("setAllResources", allResources);
-  //   }
-  // }
+  async createNewResource(
+    { dispatch, commit },
+    { name, description, category, image, alt, importance, url }
+  ) {
+    commit("setLoading", { value: true, name: "resource" });
+    commit("setMessage", { text: "", name: "resource" });
+    await apolloClient
+      .mutate({
+        mutation: CREATE_RESOURCE,
+        variables: {
+          name,
+          description,
+          category,
+          image,
+          alt,
+          importance,
+          url
+        }
+      })
+      .then(() => {
+        commit("setLoading", { value: false, name: "resource" });
+        commit("setMessage", { text: "Success!", name: "resource" });
+      })
+      .catch(err => {
+        console.log("err", err);
+        commit("setLoading", { value: false, name: "resource" });
+        commit("setMessage", { text: "Error.", name: "resource" });
+      });
+    dispatch("getTopFour");
+    if (state.current) dispatch("getCategoryResources", state.current.id);
+  },
+  async deleteResource({ dispatch }, id) {
+    await apolloClient
+      .mutate({
+        mutation: DELETE_RESOURCE,
+        variables: {
+          id
+        }
+      })
+      .then(() => {
+        console.log("item deleted");
+      })
+      .catch(err => {
+        alert("err", err);
+      });
+    await dispatch("getTopFour");
+    if (state.current) await dispatch("getCategoryResources", state.current.id);
+  },
   async getTopFour({ commit }) {
     const { data } = await apolloClient.query({
       query: TOP_FOUR_QUERY
@@ -39,6 +79,46 @@ const actions = {
       }
     });
     commit("setAllResources", data.category.resources);
+  },
+  async createNewCategory({ dispatch, commit }, { name, description }) {
+    commit("setLoading", { value: true, name: "category" });
+    commit("setMessage", { text: "", name: "category" });
+    await apolloClient
+      .mutate({
+        mutation: CREATE_CATEGORY,
+        variables: {
+          name,
+          description
+        }
+      })
+      .then(() => {
+        commit("setLoading", { value: false, name: "category" });
+        commit("setMessage", { text: "Success!", name: "category" });
+      })
+      .catch(err => {
+        console.log("err", err);
+        commit("setLoading", { value: false, name: "category" });
+        commit("setMessage", { text: "Error.", name: "category" });
+      });
+    dispatch("getTopFour");
+    if (state.current) dispatch("getCategoryResources", state.current.id);
+  },
+  async deleteCategory({ dispatch }, id) {
+    await apolloClient
+      .mutate({
+        mutation: DELETE_CATEGORY,
+        variables: {
+          id
+        }
+      })
+      .then(() => {
+        console.log("item deleted");
+      })
+      .catch(err => {
+        alert("err", err);
+      });
+    await dispatch("getTopFour");
+    if (state.current) await dispatch("getCategoryResources", state.current.id);
   }
 };
 
@@ -51,6 +131,12 @@ const mutations = {
   },
   setCurrent(state, current) {
     state.current = current;
+  },
+  setLoading(state, loading) {
+    state.loading = loading;
+  },
+  setMessage(state, message) {
+    state.message = message;
   }
 };
 

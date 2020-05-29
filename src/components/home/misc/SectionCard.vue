@@ -1,5 +1,33 @@
 <template>
   <v-col cols="11" sm="6" md="3" :lg="lg" xl="2">
+    <div class="text-center">
+      <v-btn @click="deletePrompt = true" icon>
+        <v-icon color="red">
+          close
+        </v-icon>
+      </v-btn>
+    </div>
+    <v-dialog v-model="deletePrompt" width="250">
+      <v-card>
+        <v-card-title class="headline grey lighten-2" primary-title>
+          Delete {{ item.name }}?
+        </v-card-title>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="deleteItem(), (deletePrompt = false)"
+          >
+            Yes
+          </v-btn>
+          <v-btn color="primary" text @click="deletePrompt = false">
+            No
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <a :href="`//${item.url}`" target="__blank">
       <img
         :src="item.image.url"
@@ -7,15 +35,17 @@
         class="d-block section-card__clickable"
       />
     </a>
-    <v-container>
+    <v-container style="position: relative">
       <v-row justify="space-between" align="center">
         <h3>{{ item.name }}</h3>
-        <div
-          @mouseover="toggleHovered(true)"
-          @mouseout="toggleHovered(false)"
-          class="align-self-end"
-        >
-          <v-btn @click="favorite()" icon>
+
+        <div class="align-self-end">
+          <v-btn
+            @mouseover="toggleHovered(true)"
+            @mouseout="toggleHovered(false)"
+            @click="favorite()"
+            icon
+          >
             <v-icon :color="isFilled ? 'red' : 'black'">
               <template v-if="isFilled">favorite</template>
               <template v-else>favorite_border</template>
@@ -46,7 +76,9 @@ export default {
   data() {
     return {
       heartHovered: false,
-      tempFill: false
+      tempFill: false,
+      deleting: null,
+      deletePrompt: false
     };
   },
   methods: {
@@ -55,6 +87,9 @@ export default {
       if (!this.isFavorited) {
         this.heartHovered = !this.heartHovered;
       }
+    },
+    deleteItem() {
+      this.$store.dispatch("deleteResource", this.item.id);
     },
     async favorite() {
       if (!this.isFavorited) this.tempFill = true;
