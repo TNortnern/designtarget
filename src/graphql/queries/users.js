@@ -18,6 +18,7 @@ export const USER_BY_TOKEN_QUERY = gql`
     userByToken(token: $token) {
       id
       email
+      isAdmin
       resources {
         id
         name
