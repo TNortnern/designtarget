@@ -6,8 +6,27 @@ export const LOGIN_QUERY = gql`
       user {
         id
         email
+        isAdmin
       }
       token
+    }
+  }
+`;
+
+export const USER_BY_TOKEN_QUERY = gql`
+  query($token: String!) {
+    userByToken(token: $token) {
+      id
+      email
+      resources {
+        id
+        name
+        image {
+          url
+          alt
+        }
+        description
+      }
     }
   }
 `;
@@ -17,6 +36,15 @@ export const USER_QUERY = gql`
     user(id: $id) {
       id
       email
+      resources {
+        id
+        name
+        image {
+          url
+          alt
+        }
+        description
+      }
     }
   }
 `;

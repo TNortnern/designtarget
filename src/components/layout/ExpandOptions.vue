@@ -25,7 +25,7 @@ export default {
       items: [
         {
           name: "Liked Resources",
-          to: "/collection/mine",
+          to: "/mycollection",
           admin: false
         },
         {
@@ -49,9 +49,9 @@ export default {
     };
   },
   mounted() {
-    // if (this.$store.state.auth.user && !this.$store.state.auth.user.isAdmin) {
-    //   this.items = this.items.filter(item => item.admin !== true);
-    // }
+    if (this.$store.state.auth.user && !this.$store.state.auth.user.isAdmin) {
+      this.items = this.items.filter(item => item.admin !== true);
+    }
   },
   methods: {
     logout() {

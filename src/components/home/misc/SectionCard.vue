@@ -1,7 +1,11 @@
 <template>
   <v-col cols="11" sm="6" md="3" :lg="lg" xl="2">
     <div class="text-center">
-      <v-btn @click="deletePrompt = true" icon>
+      <v-btn
+        v-if="$store.state.auth.user && $store.state.auth.user.isAdmin"
+        @click="deletePrompt = true"
+        icon
+      >
         <v-icon color="red">
           close
         </v-icon>
@@ -92,6 +96,10 @@ export default {
       this.$store.dispatch("deleteResource", this.item.id);
     },
     async favorite() {
+      if (!this.$store.state.auth.user) {
+        this.$router.push("/login");
+        return;
+      }
       if (!this.isFavorited) this.tempFill = true;
       else this.tempFill = false;
       await this.$apollo
@@ -107,8 +115,16 @@ export default {
           this.$store.dispatch("getTopFour", {});
           if (this.current)
             this.$store.dispatch("getCategoryResources", this.current.id);
+          this.$store.dispatch(
+            "getUserResources",
+            this.$store.state.auth.user.id
+          );
         })
         .catch(err => {
+          this.$store.dispatch(
+            "getUserResources",
+            this.$store.state.auth.user.id
+          );
           console.log(err);
         });
     }

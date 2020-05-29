@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../pages/Home";
 import Collection from "../pages/Collection";
+import MyCollection from "../pages/MyCollection";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 Vue.use(VueRouter);
@@ -16,6 +17,11 @@ const routes = [
     path: "/collection/:collection",
     name: "Collection",
     component: Collection
+  },
+  {
+    path: "/mycollection",
+    name: "MyCollection",
+    component: MyCollection
   },
   {
     path: "*",

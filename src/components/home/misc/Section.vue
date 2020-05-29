@@ -2,7 +2,10 @@
   <v-container class="section">
     <div class="d-flex flex-wrap justify-center justify-md-start mb-10">
       <h1 class="mr-5 section__title--editable">{{ name }}</h1>
-      <div class="text-center">
+      <div
+        v-if="$store.state.auth.user && $store.state.auth.user.isAdmin"
+        class="text-center"
+      >
         <v-btn @click="deletePrompt = true" icon>
           <v-icon color="red">
             close

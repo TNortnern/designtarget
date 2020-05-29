@@ -8,7 +8,7 @@
 
 <script>
 import { TOP_FOUR_QUERY } from "@/graphql/queries/resources";
-import { USER_QUERY } from "@/graphql/queries/users";
+import { USER_BY_TOKEN_QUERY } from "@/graphql/queries/users";
 export default {
   name: "App",
   data() {
@@ -22,7 +22,7 @@ export default {
       skip: true
     },
     user: {
-      query: USER_QUERY,
+      query: USER_BY_TOKEN_QUERY,
       skip: true
     }
   },
@@ -48,16 +48,16 @@ export default {
     async getUser() {
       await this.$apollo
         .query({
-          query: USER_QUERY,
+          query: USER_BY_TOKEN_QUERY,
           variables: {
-            id: "5ecfa7eacb82c91c9860d0e79"
+            token: localStorage.getItem("token")
           }
         })
         .then(({ data }) => {
-          this.$store.commit("setUser", data.user);
+          this.$store.commit("setUser", data.userByToken);
         })
         .catch(err => {
-          console.log('err', err)
+          console.log("err", err);
           this.$store.commit("setUser", null);
         });
     }
