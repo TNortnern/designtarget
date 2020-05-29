@@ -111,11 +111,11 @@ export default {
             user: this.authedUser.id
           }
         })
-        .then(() => {
+        .then(async () => {
           this.$store.dispatch("getTopFour", {});
           if (this.current)
             this.$store.dispatch("getCategoryResources", this.current.id);
-          this.$store.dispatch(
+          await this.$store.dispatch(
             "getUserResources",
             this.$store.state.auth.user.id
           );

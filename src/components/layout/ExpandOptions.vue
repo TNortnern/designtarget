@@ -56,6 +56,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit("setUser", null);
+      localStorage.removeItem("token");
     },
     toggleAddResource() {
       this.$store.commit("setModal", "resourceModal");

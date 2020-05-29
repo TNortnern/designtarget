@@ -1,13 +1,15 @@
 <template>
-  <Layout v-if="mine">
-    <vue-headful
-      :title="`My Collection`"
-      :description="`Manage your resource collection at Design Target`"
-    />
-    <v-container v-if="resources">
-      <h1 class="mb-3">My Collection</h1>
-      <CollectionGrid :collection="resources" />
-    </v-container>
+  <Layout>
+    <template v-if="mine">
+      <vue-headful
+        :title="`My Collection`"
+        :description="`Manage your resource collection at Design Target`"
+      />
+      <v-container v-if="resources">
+        <h1 class="mb-3">My Collection</h1>
+        <CollectionGrid :collection="resources" />
+      </v-container>
+    </template>
   </Layout>
 </template>
 
@@ -24,10 +26,8 @@ export default {
     if (!this.mine && !this.$store.state.auth.loading) {
       this.$router.push("/");
     } else {
-      if (this.mine && !this.mine.resources)
-        this.$store.dispatch("getUserResources", this.mine.id);
+      await this.$store.dispatch("getUserResources", this.mine.id);
     }
-    return;
   },
   components: {
     Layout

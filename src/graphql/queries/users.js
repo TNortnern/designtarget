@@ -21,6 +21,13 @@ export const USER_BY_TOKEN_QUERY = gql`
       resources {
         id
         name
+        likes {
+          id
+          isLiked
+          user {
+            id
+          }
+        }
         image {
           url
           alt
@@ -39,6 +46,13 @@ export const USER_QUERY = gql`
       resources {
         id
         name
+        likes {
+          id
+          isLiked
+          user {
+            id
+          }
+        }
         image {
           url
           alt

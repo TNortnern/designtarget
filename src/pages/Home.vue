@@ -5,15 +5,20 @@
       description="View all of design target's resources"
     />
     <Hero />
-    <Section
-      v-for="(category, index) in topFour"
-      :key="category.id"
-      :name="category.name"
-      :href="`collection/${category.name}`"
-      :items="category.topFour"
-      :category="category"
-      :class="index === 0 ? 'home__first-category' : ''"
-    />
+    <template v-if="topFour">
+      <Section
+        v-for="(category, index) in topFour"
+        :key="category.id"
+        :name="category.name"
+        :href="`collection/${category.name}`"
+        :items="category.topFour"
+        :category="category"
+        :class="index === 0 ? 'home__first-category' : ''"
+      />
+    </template>
+    <template v-else>
+      <v-skeleton-loader max-width="300" type="card"></v-skeleton-loader>
+    </template>
     <Illustrations />
     <Images />
     <Icons />
