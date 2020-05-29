@@ -1,10 +1,10 @@
 <template>
-  <Layout>
+  <Layout v-if="current">
     <vue-headful
       :title="`Collection - ${capitalize(current.name)}`"
       :description="`Design Target's collection of ${capitalize(current.name)}`"
     />
-    <v-container>
+    <v-container v-if="resources">
       <h1 class="mb-3">{{ capitalize(current.name) }}</h1>
       <CollectionGrid :collection="resources" />
     </v-container>
@@ -13,30 +13,21 @@
 
 <script>
 import Layout from "@/components/layout/Layout";
-import { CATEGORY_QUERY } from "@/graphql/queries/resources";
 
 export default {
-  data: () => ({}),
-  async mounted() {
-    await this.$apollo
-      .query({
-        query: CATEGORY_QUERY,
-        variables: {
-          id: this.current.id
-        }
-      })
-      .then(({ data }) => {
-        this.$store.commit("setAllResources", data.category.resources);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  data() {
+    return {
+      cookieCategory: null
+    };
   },
-  apollo: {
-    category: {
-      query: CATEGORY_QUERY,
-      skip: true
+  async mounted() {
+    const cookieCategory = JSON.parse(localStorage.getItem("category"));
+    if (this.current) {
+      localStorage.setItem("category", JSON.stringify(this.current));
+    } else if (cookieCategory) {
+      this.$store.commit("setCurrent", cookieCategory);
     }
+    this.$store.dispatch("getCategoryResources", this.current.id);
   },
   components: {
     Layout

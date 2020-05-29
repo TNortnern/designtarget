@@ -27,6 +27,8 @@ import Section from "@/components/home/misc/Section";
 import Illustrations from "@/components/home/Illustrations";
 import Images from "@/components/home/Images";
 import Icons from "@/components/home/Icons";
+import { TOP_FOUR_QUERY } from "@/graphql/queries/resources";
+
 export default {
   components: {
     Layout,
@@ -35,6 +37,29 @@ export default {
     Illustrations,
     Images,
     Icons
+  },
+  mounted() {
+    if (!this.$store.state.categories.topFour.length) this.setTopFour();
+  },
+  apollo: {
+    categories: {
+      query: TOP_FOUR_QUERY,
+      skip: true
+    }
+  },
+  methods: {
+    async setTopFour() {
+      await this.$apollo
+        .query({
+          query: TOP_FOUR_QUERY
+        })
+        .then(({ data }) => {
+          this.$store.commit("setTopFour", data.categories);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   },
   computed: {
     topFour() {

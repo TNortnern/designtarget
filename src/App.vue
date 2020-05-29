@@ -8,6 +8,7 @@
 
 <script>
 import { TOP_FOUR_QUERY } from "@/graphql/queries/resources";
+import { USER_QUERY } from "@/graphql/queries/users";
 export default {
   name: "App",
   data() {
@@ -19,6 +20,10 @@ export default {
     categories: {
       query: TOP_FOUR_QUERY,
       skip: true
+    },
+    user: {
+      query: USER_QUERY,
+      skip: true
     }
   },
   mounted() {
@@ -26,9 +31,11 @@ export default {
     // here we want the footer to always be at the bottom so we set the padding bottom equal to it's height
     // avoid setting on login and signup since these pages don't have footers
     if (this.routeName !== "login" && this.routeName !== "signup") {
-      this.footerHeight = document.querySelector("footer").offsetHeight;
+      if (document.querySelector("footer"))
+        this.footerHeight = document.querySelector("footer").offsetHeight;
     }
     if (!this.$store.state.categories.topFour.length) this.setTopFour();
+    if (!this.$store.state.auth.user) this.getUser();
   },
   methods: {
     setFooterHeight() {
@@ -36,15 +43,18 @@ export default {
       this.footerHeight = footer;
     },
     async setTopFour() {
+      this.$store.dispatch("getTopFour", {});
+    },
+    async getUser() {
       await this.$apollo
         .query({
-          query: TOP_FOUR_QUERY
+          query: USER_QUERY,
+          variables: {
+            id: "5ecfa7eacb82c91c98600e79"
+          }
         })
         .then(({ data }) => {
-          this.$store.commit("setTopFour", data.categories);
-        })
-        .catch(err => {
-          console.log(err);
+          this.$store.commit("setUser", data.user);
         });
     }
   },
@@ -53,6 +63,12 @@ export default {
       // avoid setting on login and signup since these pages don't have footers
       if (to.name !== "login" && to.name !== "signup") {
         this.setFooterHeight();
+      }
+      if (to.name !== "Collection") {
+        // remove set category if not visiting collections page
+        if (this.$store.state.categories.current)
+          this.$store.commit("setCurrent", null);
+        console.log("unset here..");
       }
     }
   },

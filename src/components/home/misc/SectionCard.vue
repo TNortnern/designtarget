@@ -10,15 +10,14 @@
     <v-container>
       <v-row justify="space-between" align="center">
         <h3>{{ item.name }}</h3>
-        <div class="align-self-end">
-          <v-btn
-            @click="favorite()"
-            @mouseover="toggleHovered()"
-            @mouseout="toggleHovered()"
-            icon
-          >
-            <v-icon :color="heartHovered || inFavorites ? 'red' : 'black'">
-              <template v-if="heartHovered || inFavorites">favorite</template>
+        <div
+          @mouseover="toggleHovered(true)"
+          @mouseout="toggleHovered(false)"
+          class="align-self-end"
+        >
+          <v-btn @click="favorite()" icon>
+            <v-icon :color="isFilled ? 'red' : 'black'">
+              <template v-if="isFilled">favorite</template>
               <template v-else>favorite_border</template>
             </v-icon>
           </v-btn>
@@ -32,6 +31,7 @@
 </template>
 
 <script>
+import { TOGGLE_LIKE } from "@/graphql/mutations/likes";
 export default {
   props: {
     item: {
@@ -46,26 +46,58 @@ export default {
   data() {
     return {
       heartHovered: false,
-      favorited: []
+      tempFill: false
     };
   },
   methods: {
-    toggleHovered() {
-      if (!this.inFavorites) {
+    toggleHovered(bool) {
+      if (bool) return (this.heartHovered = bool);
+      if (!this.isFavorited) {
         this.heartHovered = !this.heartHovered;
       }
     },
-    favorite() {
-      if (!this.inFavorites) {
-        this.favorited = [...this.favorited, this.item];
-      } else {
-        this.favorited = this.favorited.filter(item => item !== this.item);
-      }
+    async favorite() {
+      if (!this.isFavorited) this.tempFill = true;
+      else this.tempFill = false;
+      await this.$apollo
+        .mutate({
+          mutation: TOGGLE_LIKE,
+          variables: {
+            id: this.isFavorited,
+            resource: this.item.id,
+            user: this.authedUser.id
+          }
+        })
+        .then(() => {
+          this.$store.dispatch("getTopFour", {});
+          if (this.current)
+            this.$store.dispatch("getCategoryResources", this.current.id);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   computed: {
-    inFavorites() {
-      return this.favorited.includes(this.item);
+    isFavorited() {
+      if (!this.item) return undefined;
+      const likes = this.item.likes;
+      if (!likes || !likes.length || !this.authedUser) return undefined;
+      const like = likes.find(each => each.user.id === this.authedUser.id);
+      if (!like) return undefined;
+      return like.id;
+    },
+    isFilled() {
+      return this.isFavorited || this.tempFill;
+    },
+    authedUser() {
+      return this.$store.state.auth.user;
+    },
+    allResources() {
+      return this.$store.state.categories.allResources;
+    },
+    current() {
+      return this.$store.state.categories.current;
     }
   }
 };
@@ -91,7 +123,7 @@ h3 {
   cursor: pointer;
   &:hover {
     opacity: 1;
-    transform: scale(1.02);
+    // transform: scale(1.02);
   }
 }
 </style>

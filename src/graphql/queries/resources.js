@@ -11,6 +11,8 @@ export const TOP_FOUR_QUERY = gql`
         description
         url
         likes {
+          id
+          isLiked
           user {
             id
           }
@@ -34,6 +36,8 @@ export const CATEGORY_QUERY = gql`
         description
         url
         likes {
+          id
+          isLiked
           user {
             id
           }
