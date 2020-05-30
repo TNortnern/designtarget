@@ -1,31 +1,45 @@
 <template>
-  <v-card elevation="24">
-    <ResourceModal />
+  <div>
     <CategoryModal />
-
-    <v-list class="transparent">
-      <v-list-item
-        :to="item.to ? item.to : ''"
-        v-for="item in items"
-        :key="item.name"
-        @click="item.function()"
-        class="expand__list-item"
-      >
-        <v-list-item-title>{{ item.name }}</v-list-item-title>
-        <v-divider />
-      </v-list-item>
-    </v-list>
-  </v-card>
+    <ResourceModal />
+    <v-menu :close-on-click="false" offset-y>
+      <template v-slot:activator="{ on }">
+        <v-btn
+          class="text-capitalize"
+          text
+          :color="$store.state.black"
+          v-on="on"
+          @click="expanded = true"
+        >
+          My Account
+          <v-icon>
+            <template v-if="!expanded">expand_more</template>
+            <template v-else>expand_less</template>
+          </v-icon>
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item
+          v-for="(item, index) in listItemsToRender"
+          :key="index"
+          @click="item.function(), (expanded = false)"
+        >
+          <v-list-item-title>{{ item.name }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
+      expanded: false,
       items: [
         {
           name: "Liked Resources",
-          to: "/mycollection",
+          function: this.goToResources,
           admin: false
         },
         {
@@ -48,11 +62,6 @@ export default {
       addingCategory: false
     };
   },
-  mounted() {
-    if (this.$store.state.auth.user && !this.$store.state.auth.user.isAdmin) {
-      this.items = this.items.filter(item => item.admin !== true);
-    }
-  },
   methods: {
     logout() {
       this.$store.commit("setUser", null);
@@ -63,6 +72,24 @@ export default {
     },
     toggleAddCategory() {
       this.$store.commit("setModal", "categoryModal");
+    },
+    goToResources() {
+      if (this.$route.name !== "MyCollection")
+        this.$router.push("/mycollection");
+    },
+    toggleExpand() {
+      this.expanded = !this.expanded;
+    }
+  },
+  computed: {
+    isAdmin() {
+      return this.$store.state.auth.user.isAdmin;
+    },
+    listItemsToRender() {
+      if (!this.isAdmin) {
+        return this.items.filter(item => item.admin !== true);
+      }
+      return this.items;
     }
   }
 };
@@ -71,5 +98,9 @@ export default {
 <style scoped>
 .expand__list-item:hover {
   background-color: rgba(0, 0, 0, 0.103);
+}
+.bg-transparent {
+  background-color: transparent !important;
+  border-color: transparent !important;
 }
 </style>

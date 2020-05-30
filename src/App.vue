@@ -72,7 +72,6 @@ export default {
         // remove set category if not visiting collections page
         if (this.$store.state.categories.current)
           this.$store.commit("setCurrent", null);
-        console.log("unset here..");
       }
     }
   },

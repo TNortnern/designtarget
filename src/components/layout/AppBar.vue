@@ -47,26 +47,7 @@
               </v-btn>
             </template>
             <template v-else>
-              <div style="position: relative; z-index:9999">
-                <v-btn
-                  @click="toggleExpand()"
-                  class="text-capitalize"
-                  text
-                  :color="$store.state.black"
-                >
-                  My Account
-                  <v-icon>
-                    <template v-if="!expanded">expand_more</template>
-                    <template v-else>expand_less</template>
-                  </v-icon>
-                </v-btn>
-                <div
-                  v-if="expanded"
-                  style="position: absolute; right: -50%; z-index:9999"
-                >
-                  <ExpandOptions />
-                </div>
-              </div>
+              <ExpandOptions />
             </template>
           </v-col>
         </v-row>
@@ -86,18 +67,13 @@ export default {
     ExpandOptions
   },
   data() {
-    return {
-      expanded: false
-    };
+    return {};
   },
   methods: {
     goHome() {
       if (this.$route.name !== "Home") {
         this.$router.push("/");
       }
-    },
-    toggleExpand() {
-      this.expanded = !this.expanded;
     }
   }
 };
