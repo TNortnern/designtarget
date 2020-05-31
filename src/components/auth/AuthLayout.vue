@@ -9,26 +9,38 @@
         />
       </v-col>
       <v-col class="auth-layout__form" cols="12" lg="6">
-        <form
-          @submit.prevent="action()"
-          class="d-flex justify-center align-center container"
-        >
-          <div>
-            <div class="text-center mb-4">
-              <img src="@/assets/designlogo.png" alt="design logo" />
-            </div>
-            <slot />
-            <v-btn type="submit" :color="$store.state.red" block dark rounded>
-              {{ buttonName }}
-            </v-btn>
-            <div class="text-center mt-5">
-              <span>
-                {{ cta.message }}
-                <b @click="$router.push(cta.route)">{{ cta.name }}</b></span
+        <ValidationObserver v-slot="{ invalid }">
+          <form
+            @submit.prevent="() => (!invalid ? action() : '')"
+            class="d-flex justify-center align-center container"
+          >
+            <div>
+              <div class="text-center mb-4">
+                <img src="@/assets/designlogo.png" alt="design logo" />
+              </div>
+              <slot />
+              <v-btn
+                v-if="!cta.loading"
+                type="submit"
+                :color="$store.state.red"
+                block
+                dark
+                rounded
               >
+                {{ buttonName }}
+              </v-btn>
+              <div v-else class="text-center">
+                <v-progress-circular indeterminate> </v-progress-circular>
+              </div>
+              <div class="text-center mt-5">
+                <span>
+                  {{ cta.message }}
+                  <b @click="$router.push(cta.route)">{{ cta.name }}</b></span
+                >
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </ValidationObserver>
       </v-col>
     </v-row>
     <Footer

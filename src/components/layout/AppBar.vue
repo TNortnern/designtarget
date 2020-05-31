@@ -25,21 +25,30 @@
             </div>
           </v-col>
           <v-col cols="4" class="d-none d-md-flex justify-end">
-            <router-link
-              class="appbar__link appbar__link--login mr-8"
-              :to="$store.state.loginLink.href"
-            >
-              {{ $store.state.loginLink.name }}
-            </router-link>
-            <v-btn
-              class="text-capitalize white--text"
-              rounded
-              dark
-              :color="$store.state.red"
-              :to="$store.state.signUpLink.href"
-            >
-              {{ $store.state.signUpLink.name }}
-            </v-btn>
+            <template v-if="$store.state.auth.loading">
+              <v-progress-circular indeterminate color="primary">
+              </v-progress-circular>
+            </template>
+            <template v-else-if="!$store.state.auth.user">
+              <router-link
+                class="appbar__link appbar__link--login mr-8"
+                :to="$store.state.loginLink.href"
+              >
+                {{ $store.state.loginLink.name }}
+              </router-link>
+              <v-btn
+                class="text-capitalize white--text"
+                rounded
+                dark
+                :color="$store.state.red"
+                :to="$store.state.signUpLink.href"
+              >
+                {{ $store.state.signUpLink.name }}
+              </v-btn>
+            </template>
+            <template v-else>
+              <ExpandOptions />
+            </template>
           </v-col>
         </v-row>
       </v-container>
@@ -50,10 +59,15 @@
 <script>
 import MobileNavigation from "./MobileNavigation";
 import Drawer from "./Drawer";
+import ExpandOptions from "./ExpandOptions";
 export default {
   components: {
     MobileNavigation,
-    Drawer
+    Drawer,
+    ExpandOptions
+  },
+  data() {
+    return {};
   },
   methods: {
     goHome() {

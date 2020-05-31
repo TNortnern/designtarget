@@ -18,13 +18,23 @@
           </v-list-item-icon>
           <v-list-item-title>{{ link.name }} </v-list-item-title>
         </v-list-item>
+        <MobileAuthRoutes />
       </v-list-item-group>
     </v-list>
+    <template v-slot:append>
+      <div class="pa-2">
+        <v-btn block color="black" dark>Logout</v-btn>
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
 
 <script>
+import MobileAuthRoutes from "./MobileAuthRoutes";
 export default {
+  components: {
+    MobileAuthRoutes
+  },
   props: {
     open: {
       type: Boolean,

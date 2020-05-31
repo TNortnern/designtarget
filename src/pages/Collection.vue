@@ -1,73 +1,68 @@
 <template>
   <Layout>
-    <vue-headful
-      :title="`Collection - ${capitalize(title)}`"
-      :description="`Design Target's collection of ${capitalize(title)}`"
-    />
-    <v-container>
-      <h1 class="mb-3">{{ capitalize(title) }}</h1>
-      <CollectionGrid :collection="items" />
-    </v-container>
+    <template v-if="current">
+      <vue-headful
+        :title="`Collection - ${capitalize(current.name)}`"
+        :description="
+          `Design Target's collection of ${capitalize(current.name)}`
+        "
+      />
+      <v-container v-if="resources && !loadingResources">
+        <h1 class="mb-3">{{ capitalize(current.name) }}</h1>
+        <CollectionGrid :collection="resources" />
+      </v-container>
+      <template v-else>
+        <SkeletonRender />
+      </template>
+    </template>
   </Layout>
 </template>
 
 <script>
 import Layout from "@/components/layout/Layout";
-export default {
-  data: () => ({
-    items: [
-      {
-        name: "Mixkit",
-        description:
-          "Download high quality, royalty free video footage and art.",
-        image: "mixkit"
-      },
+import SkeletonRender from "@/components/skeletons/SkeletonRender";
 
-      {
-        name: "Humaaans",
-        description: "Mix & Match high quality illustrations of people.",
-        image: "humaaans"
-      },
-      {
-        name: "Lukaszadam",
-        description:
-          "Free high quality illustrations for everyone. Projects and commercial.",
-        image: "lukaszadam"
-      },
-      {
-        name: "Mixkit",
-        description:
-          "Download high quality, royalty free video footage and art.",
-        image: "mixkit"
-      },
-      {
-        name: "unDraw",
-        description:
-          "Open source illustrations for every project you can imagine and create.",
-        image: "unDraw"
-      },
-      {
-        name: "Humaaans",
-        description: "Mix & Match high quality illustrations of people.",
-        image: "humaaans"
-      },
-      {
-        name: "Lukaszadam",
-        description:
-          "Free high quality illustrations for everyone. Projects and commercial.",
-        image: "lukaszadam"
+export default {
+  data() {
+    return {
+      cookieCategory: null
+    };
+  },
+  mounted() {
+    this.$store.dispatch("getCategoryResources", this.route.collection);
+  },
+  watch: {
+    route(to) {
+      if (to) {
+        this.$store.dispatch("getCategoryResources", this.route.collection);
       }
-    ]
-  }),
+    }
+  },
   components: {
-    Layout
+    Layout,
+    SkeletonRender
   },
   computed: {
-    title() {
-      return this.$route.params.collection;
+    current() {
+      return this.$store.state.categories.current;
+    },
+    route() {
+      return this.$route.params;
+    },
+    resources() {
+      return this.current.resources;
+    },
+    loadingResources() {
+      return (
+        this.$store.state.categories.loading.name ===
+          "loadingCategoryResources" &&
+        this.$store.state.categories.loading === true
+      );
     }
   }
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "../styles/index.scss";
+</style>

@@ -1,5 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import categories from "./categories";
+import auth from "./auth";
+import utility from "./utility";
 
 Vue.use(Vuex);
 
@@ -7,6 +10,7 @@ export default new Vuex.Store({
   state: {
     red: "#FF2121",
     black: "#272727",
+    appLoading: false,
     links: [
       {
         name: "Illustrations",
@@ -32,8 +36,15 @@ export default new Vuex.Store({
         state.drawer = false;
       }
       state.drawer = !state.drawer;
+    },
+    setAppLoading(state, loading) {
+      state.appLoading = loading;
     }
   },
   actions: {},
-  modules: {}
+  modules: {
+    categories,
+    auth,
+    utility
+  }
 });

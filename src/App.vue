@@ -1,5 +1,11 @@
 <template>
   <v-app id="app">
+    <v-progress-linear
+      v-if="$store.state.appLoading"
+      fixed
+      indeterminate
+      color="black"
+    ></v-progress-linear>
     <div :style="`padding-bottom: ${footerHeight}px`">
       <router-view />
     </div>
@@ -7,6 +13,8 @@
 </template>
 
 <script>
+import { TOP_FOUR_QUERY } from "@/graphql/queries/resources";
+import { USER_BY_TOKEN_QUERY } from "@/graphql/queries/users";
 export default {
   name: "App",
   data() {
@@ -14,25 +22,66 @@ export default {
       footerHeight: 0
     };
   },
+  apollo: {
+    categories: {
+      query: TOP_FOUR_QUERY,
+      skip: true
+    },
+    user: {
+      query: USER_BY_TOKEN_QUERY,
+      skip: true
+    }
+  },
   mounted() {
     window.addEventListener("resize", this.setFooterHeight);
     // here we want the footer to always be at the bottom so we set the padding bottom equal to it's height
     // avoid setting on login and signup since these pages don't have footers
     if (this.routeName !== "login" && this.routeName !== "signup") {
-      this.footerHeight = document.querySelector("footer").offsetHeight;
+      if (document.querySelector("footer"))
+        this.footerHeight = document.querySelector("footer").offsetHeight;
     }
+    if (!this.$store.state.categories.topFour.length) this.setTopFour();
+    if (!this.$store.state.auth.user) this.getUser();
   },
   methods: {
     setFooterHeight() {
       const footer = document.querySelector("footer").offsetHeight;
       this.footerHeight = footer;
+    },
+    async setTopFour() {
+      this.$store.dispatch("getTopFour", {});
+    },
+    async getUser() {
+      await this.$apollo
+        .query({
+          query: USER_BY_TOKEN_QUERY,
+          variables: {
+            token: localStorage.getItem("token")
+          }
+        })
+        .then(({ data }) => {
+          this.$store.commit("setUser", data.userByToken);
+        })
+        .catch(err => {
+          console.log("err", err);
+          this.$store.commit("setUser", null);
+        });
     }
   },
   watch: {
     $route(to) {
       // avoid setting on login and signup since these pages don't have footers
       if (to.name !== "login" && to.name !== "signup") {
-        this.setFooterHeight();
+        try {
+          this.setFooterHeight();
+        } catch (e) {
+          this.throwAway(e);
+        }
+      }
+      if (to.name !== "Collection") {
+        // remove set category if not visiting collections page
+        if (this.$store.state.categories.current)
+          this.$store.commit("setCurrent", null);
       }
     }
   },
