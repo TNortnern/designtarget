@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     red: "#FF2121",
     black: "#272727",
+    appLoading: false,
     links: [
       {
         name: "Illustrations",
@@ -34,6 +35,9 @@ export default new Vuex.Store({
         state.drawer = false;
       }
       state.drawer = !state.drawer;
+    },
+    setAppLoading(state, loading) {
+      state.appLoading = loading;
     }
   },
   actions: {},

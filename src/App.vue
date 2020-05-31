@@ -1,5 +1,11 @@
 <template>
   <v-app id="app">
+    <v-progress-linear
+      v-if="$store.state.appLoading"
+      fixed
+      indeterminate
+      color="black"
+    ></v-progress-linear>
     <div :style="`padding-bottom: ${footerHeight}px`">
       <router-view />
     </div>

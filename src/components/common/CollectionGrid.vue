@@ -6,7 +6,7 @@
         :key="i"
         :item="item"
         lg="3"
-        :isUsers="true"
+        :isUsers="isUsers"
       />
     </v-row>
   </div>
