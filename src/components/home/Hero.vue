@@ -18,7 +18,6 @@
             outlined
             light
             clearable
-            :loading="searchLoading ? true : false"
             background-color="white"
             color="black"
             v-model="term"

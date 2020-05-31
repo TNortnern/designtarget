@@ -71,7 +71,7 @@ const actions = {
     });
     commit("setTopFour", data.categories);
   },
-  async getCategoryResources({ commit }, id) {
+  async getCategoryResources({ commit }, name) {
     commit("setLoading", { value: true, name: "loadingCategoryResources" });
     commit("setAppLoading", true, { root: true });
     commit("setAppLoading", false, { root: true });
@@ -79,7 +79,7 @@ const actions = {
       .query({
         query: CATEGORY_QUERY,
         variables: {
-          id
+          name
         }
       })
       .then(({ data }) => {
@@ -89,6 +89,7 @@ const actions = {
           name: "loadingCategoryResources"
         });
         commit("setAllResources", data.category.resources);
+        commit("setCurrent", data.category)
       })
       .catch(err => {
         commit("setAppLoading", false, { root: true });

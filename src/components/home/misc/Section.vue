@@ -1,7 +1,6 @@
 <template>
   <v-container class="section">
     <div class="d-flex flex-wrap justify-center justify-md-start mb-10">
-      <h1 class="mr-5 section__title--editable">{{ name }}</h1>
       <div
         v-if="$store.state.auth.user && $store.state.auth.user.isAdmin"
         class="text-center"
@@ -33,7 +32,13 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-      <!-- <h1 class="mr-5">{{ name }}</h1> -->
+      <h1
+        v-if="$store.state.auth.user && $store.state.auth.user.isAdmin"
+        class="mr-5 section__title--editable"
+      >
+        {{ capitalize(name) }}
+      </h1>
+      <h1 v-else class="mr-5">{{ capitalize(name) }}</h1>
       <v-btn
         @click="viewCategory()"
         class="text-capitalize align-self-center"

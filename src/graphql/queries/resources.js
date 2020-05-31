@@ -27,8 +27,8 @@ export const TOP_FOUR_QUERY = gql`
 `;
 
 export const CATEGORY_QUERY = gql`
-  query($id: ID!) {
-    category(id: $id) {
+  query($name: String!) {
+    category(name: $name) {
       name
       resources {
         id

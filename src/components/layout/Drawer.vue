@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import MobileAuthRoutes from "./MobileAuthRoutes"
+import MobileAuthRoutes from "./MobileAuthRoutes";
 export default {
   components: {
     MobileAuthRoutes

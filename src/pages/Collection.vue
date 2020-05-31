@@ -29,13 +29,14 @@ export default {
     };
   },
   mounted() {
-    const cookieCategory = JSON.parse(localStorage.getItem("category"));
-    if (this.current) {
-      localStorage.setItem("category", JSON.stringify(this.current));
-    } else if (cookieCategory) {
-      this.$store.commit("setCurrent", cookieCategory);
+    this.$store.dispatch("getCategoryResources", this.route.collection);
+  },
+  watch: {
+    route(to) {
+      if (to) {
+        this.$store.dispatch("getCategoryResources", this.route.collection);
+      }
     }
-    this.$store.dispatch("getCategoryResources", this.current.id);
   },
   components: {
     Layout,
@@ -45,8 +46,11 @@ export default {
     current() {
       return this.$store.state.categories.current;
     },
+    route() {
+      return this.$route.params;
+    },
     resources() {
-      return this.$store.state.categories.allResources;
+      return this.current.resources;
     },
     loadingResources() {
       return (
