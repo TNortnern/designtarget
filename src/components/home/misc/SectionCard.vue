@@ -121,7 +121,6 @@ export default {
           fetchPolicy: "no-cache"
         })
         .then(({ data }) => {
-          console.log("data", data);
           this.$store.commit("setAppLoading", false);
           this.$store.commit("setUser", data.toggleLike.user);
           this.likeData = data.toggleLike.like;
@@ -137,6 +136,8 @@ export default {
       if (this.likeData) {
         if (this.likeData.isLiked) {
           return this.likeData;
+        } else {
+          return undefined;
         }
       }
       const likes = this.item.likes;

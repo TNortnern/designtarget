@@ -50,3 +50,25 @@ export const CATEGORY_QUERY = gql`
     }
   }
 `;
+
+export const SEARCH_RESOURCES = gql`
+  query($term: String!) {
+    resourcesLike(name: $term) {
+      id
+      name
+      description
+      url
+      likes {
+        id
+        isLiked
+        user {
+          id
+        }
+      }
+      image {
+        url
+        alt
+      }
+    }
+  }
+`;

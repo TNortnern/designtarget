@@ -7,12 +7,34 @@
           designtarget is a curated list of design resources that will help you
           speed up your workflow.
         </p>
-        <div style="position: relative;">
+        <form @submit.prevent="search()" style="position: relative;">
           <v-icon class="hero-input-icon">
             search
           </v-icon>
-          <input placeholder="Search for a resource" type="text" />
-        </div>
+          <v-text-field
+            label=""
+            placeholder="Search for a resource"
+            prepend-inner-icon="search"
+            outlined
+            light
+            clearable
+            :loading="searchLoading ? true : false"
+            background-color="white"
+            color="black"
+            v-model="term"
+            type="text"
+          ></v-text-field>
+          <v-btn
+            style="position: relative; bottom: 20px;"
+            type="submit"
+            v-if="term"
+            color="red"
+            dark
+            rounded
+          >
+            Submit
+          </v-btn>
+        </form>
       </v-col>
       <v-col
         style="position: relative; z-index: 1"
@@ -32,7 +54,36 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    term: {
+      set(val) {
+        this.$store.commit("setTerm", val);
+      },
+      get() {
+        return this.$store.state.utility.term;
+      }
+    },
+    searchLoading() {
+      return this.$store.state.utility.loading;
+    }
+  },
+  methods: {
+    search() {
+      this.$store.dispatch("searchResources");
+    }
+  },
+  watch: {
+    term(cur) {
+      if (!cur) {
+        this.$store.commit("setTerm", "");
+        this.$store.commit("setSearchItems", []);
+        this.$store.commit("setSearching", false);
+        this.$store.commit("setLoading", false);
+      }
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
