@@ -64,8 +64,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.commit("setUser", null);
-      localStorage.removeItem("token");
+      this.$store.dispatch("logout");
       this.$router.push("/login");
     },
     toggleAddResource() {

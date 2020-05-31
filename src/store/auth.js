@@ -9,6 +9,10 @@ const state = () => ({
 });
 
 const actions = {
+  logout({ commit }) {
+    commit("setUser", null);
+    localStorage.removeItem("token");
+  },
   async getUserResources({ commit }, id) {
     await apolloClient
       .query({
