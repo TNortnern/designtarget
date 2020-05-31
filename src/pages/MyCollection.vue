@@ -1,25 +1,27 @@
 <template>
   <Layout>
-    <template>
-      <vue-headful
-        :title="`${mine ? 'My Collection' : 'Login'}`"
-        :description="`Manage your resource collection at Design Target`"
-      />
-      <v-container>
-        <template v-if="resources && resources.length">
-          <h1 class="mb-3">My Collection</h1>
-          <CollectionGrid :collection="resources" :isUsers="true" />
-        </template>
-        <template v-else>
-          <h1>Looks like you haven't liked any resources yet</h1>
-        </template>
-      </v-container>
+    <vue-headful
+      :title="`${mine ? 'My Collection' : 'Login'}`"
+      :description="`Manage your resource collection at Design Target`"
+    />
+    <v-container v-if="resources">
+      <template v-if="resources.length">
+        <h1 class="mb-3">My Collection</h1>
+        <CollectionGrid :collection="resources" :isUsers="true" />
+      </template>
+      <template v-else>
+        <h1>Looks like you haven't liked any resources yet</h1>
+      </template>
+    </v-container>
+    <template v-else>
+      <SkeletonRender />
     </template>
   </Layout>
 </template>
 
 <script>
 import Layout from "@/components/layout/Layout";
+import SkeletonRender from "@/components/skeletons/SkeletonRender"
 
 export default {
   data() {
@@ -33,7 +35,8 @@ export default {
     }
   },
   components: {
-    Layout
+    Layout,
+    SkeletonRender
   },
   computed: {
     resources() {
@@ -46,4 +49,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "../styles/index.scss";
+.container {
+  max-width: 1640px !important;
+}
+</style>

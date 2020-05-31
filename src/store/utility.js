@@ -14,6 +14,7 @@ const actions = {
     commit("setSearching", true);
     commit("setLoading", true);
     commit("setCurrentTerm", state.term);
+    commit("setAppLoading", true, { root: true });
     await apolloClient
       .query({
         query: SEARCH_RESOURCES,
@@ -23,10 +24,12 @@ const actions = {
       })
       .then(({ data }) => {
         commit("setLoading", false);
+        commit("setAppLoading", false, { root: true });
         console.log("data", data);
         commit("setSearchItems", data.resourcesLike);
       })
       .catch(err => {
+        commit("setAppLoading", false, { root: true });
         commit("setLoading", false);
         console.log("err", err);
       });

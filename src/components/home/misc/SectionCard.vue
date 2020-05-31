@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <v-col cols="11" sm="6" md="3" :lg="lg" xl="2">
+    <v-col cols="11" sm="6" md="3" :lg="lg" :xl="xl">
       <div class="text-center">
         <v-btn
           v-if="$store.state.auth.user && $store.state.auth.user.isAdmin"
@@ -41,7 +41,11 @@
         />
       </a>
       <v-container style="position: relative">
-        <v-row justify="space-between" align="center">
+        <v-row
+          class="section-card__like"
+          justify="space-between"
+          align="center"
+        >
           <h3>{{ item.name }}</h3>
 
           <div class="align-self-end">
@@ -75,6 +79,10 @@ export default {
       default: () => {}
     },
     lg: {
+      type: [Number, String],
+      default: 2
+    },
+    xl: {
       type: [Number, String],
       default: 2
     },
@@ -178,6 +186,11 @@ img {
   width: 100%;
   @include xl() {
     width: 277px;
+  }
+}
+.section-card__like {
+  @include xl() {
+    max-width: 277px;
   }
 }
 h3 {

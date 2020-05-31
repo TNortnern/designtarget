@@ -25,7 +25,7 @@
             type="text"
           ></v-text-field>
           <v-btn
-            style="position: relative; bottom: 20px;"
+            style="position: absolute; bottom: -18%; left: 0%;"
             type="submit"
             v-if="term"
             color="red"

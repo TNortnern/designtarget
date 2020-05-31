@@ -7,16 +7,20 @@
           `Design Target's collection of ${capitalize(current.name)}`
         "
       />
-      <v-container v-if="resources">
+      <v-container v-if="resources && !loadingResources">
         <h1 class="mb-3">{{ capitalize(current.name) }}</h1>
         <CollectionGrid :collection="resources" />
       </v-container>
+      <template v-else>
+        <SkeletonRender />
+      </template>
     </template>
   </Layout>
 </template>
 
 <script>
 import Layout from "@/components/layout/Layout";
+import SkeletonRender from "@/components/skeletons/SkeletonRender";
 
 export default {
   data() {
@@ -34,7 +38,8 @@ export default {
     this.$store.dispatch("getCategoryResources", this.current.id);
   },
   components: {
-    Layout
+    Layout,
+    SkeletonRender
   },
   computed: {
     current() {
@@ -42,9 +47,18 @@ export default {
     },
     resources() {
       return this.$store.state.categories.allResources;
+    },
+    loadingResources() {
+      return (
+        this.$store.state.categories.loading.name ===
+          "loadingCategoryResources" &&
+        this.$store.state.categories.loading === true
+      );
     }
   }
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import "../styles/index.scss";
+</style>

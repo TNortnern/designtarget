@@ -5,9 +5,9 @@
       description="View all of design target's resources"
     />
     <Hero />
-    <template v-if="topFour || searchItems.length">
+    <template v-if="(topFour && topFour.length) || searchItems.length">
       <template v-if="searching">
-        <v-container>
+        <v-container class="margin-top-from-hero">
           <h1>Search results for {{ currentTerm }}:</h1>
           <template v-if="searchItems.length">
             <CollectionGrid :collection="searchItems" />
@@ -30,7 +30,7 @@
       </template>
     </template>
     <template v-else>
-      <v-skeleton-loader max-width="300" type="card"></v-skeleton-loader>
+      <SkeletonRender classes="margin-top-from-hero" />
     </template>
     <!-- <Illustrations />
     <Images />
@@ -46,12 +46,14 @@ import Section from "@/components/home/misc/Section";
 // import Images from "@/components/home/Images";
 // import Icons from "@/components/home/Icons";
 import { TOP_FOUR_QUERY } from "@/graphql/queries/resources";
+import SkeletonRender from "@/components/skeletons/SkeletonRender";
 
 export default {
   components: {
     Layout,
     Hero,
-    Section
+    Section,
+    SkeletonRender
     // Illustrations,
     // Images,
     // Icons
@@ -102,8 +104,16 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles";
 $marginTop: 30px;
+$containerMarginTop: 120px;
+
 .home__first-category {
-  margin-top: 120px;
+  margin-top: $containerMarginTop;
+  @include lg() {
+    margin-top: 50px;
+  }
+  @include md() {
+    margin-top: 25px;
+  }
   @include sm() {
     margin-top: $marginTop;
   }

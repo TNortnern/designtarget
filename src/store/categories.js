@@ -72,13 +72,32 @@ const actions = {
     commit("setTopFour", data.categories);
   },
   async getCategoryResources({ commit }, id) {
-    const { data } = await apolloClient.query({
-      query: CATEGORY_QUERY,
-      variables: {
-        id
-      }
-    });
-    commit("setAllResources", data.category.resources);
+    commit("setLoading", { value: true, name: "loadingCategoryResources" });
+    commit("setAppLoading", true, { root: true });
+    commit("setAppLoading", false, { root: true });
+    await apolloClient
+      .query({
+        query: CATEGORY_QUERY,
+        variables: {
+          id
+        }
+      })
+      .then(({ data }) => {
+        commit("setAppLoading", false, { root: true });
+        commit("setLoading", {
+          value: false,
+          name: "loadingCategoryResources"
+        });
+        commit("setAllResources", data.category.resources);
+      })
+      .catch(err => {
+        commit("setAppLoading", false, { root: true });
+        commit("setLoading", {
+          value: false,
+          name: "loadingCategoryResources"
+        });
+        console.log("err", err);
+      });
   },
   async createNewCategory({ dispatch, commit }, { name, description }) {
     commit("setLoading", { value: true, name: "category" });
