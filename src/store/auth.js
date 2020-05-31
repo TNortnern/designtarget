@@ -1,5 +1,5 @@
 import { apolloClient } from "@/plugins/apolloProvider";
-import { USER_QUERY } from "../graphql/queries/users";
+import { USER_QUERY, USER_BY_TOKEN_QUERY } from "../graphql/queries/users";
 
 const state = () => ({
   user: null,
@@ -10,7 +10,6 @@ const state = () => ({
 
 const actions = {
   async getUserResources({ commit }, id) {
-    console.log('this happened')
     await apolloClient
       .query({
         query: USER_QUERY,
@@ -19,7 +18,21 @@ const actions = {
         }
       })
       .then(({ data }) => {
-        console.log('data', data)
+        commit("setUser", data.user);
+      })
+      .catch(err => {
+        console.log("err", err);
+      });
+  },
+  async getUserByToken({ commit }, token) {
+    await apolloClient
+      .query({
+        query: USER_BY_TOKEN_QUERY,
+        variables: {
+          token
+        }
+      })
+      .then(({ data }) => {
         commit("setUser", data.user);
       })
       .catch(err => {

@@ -1,13 +1,18 @@
 <template>
   <Layout>
-    <template v-if="mine">
+    <template>
       <vue-headful
-        :title="`My Collection`"
+        :title="`${mine ? 'My Collection' : 'Login'}`"
         :description="`Manage your resource collection at Design Target`"
       />
-      <v-container v-if="resources">
-        <h1 class="mb-3">My Collection</h1>
-        <CollectionGrid :collection="resources" :isUsers="true" />
+      <v-container>
+        <template v-if="resources && resources.length">
+          <h1 class="mb-3">My Collection</h1>
+          <CollectionGrid :collection="resources" :isUsers="true" />
+        </template>
+        <template v-else>
+          <h1>Looks like you haven't liked any resources yet</h1>
+        </template>
       </v-container>
     </template>
   </Layout>
@@ -26,8 +31,6 @@ export default {
     if (this.mine && !this.mine.resources) {
       await this.$store.dispatch("getUserResources", this.mine.id);
     }
-    console.log("this.mine", this.mine);
-    console.log("this.resources", this.resources);
   },
   components: {
     Layout
@@ -38,12 +41,6 @@ export default {
     },
     mine() {
       return this.$store.state.auth.user;
-    }
-  },
-  watch: {
-    mine(newval, oldval) {
-      if (newval) console.log("newval", newval);
-      if (oldval) console.log("oldval", oldval);
     }
   }
 };

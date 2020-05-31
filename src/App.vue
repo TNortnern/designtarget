@@ -66,7 +66,11 @@ export default {
     $route(to) {
       // avoid setting on login and signup since these pages don't have footers
       if (to.name !== "login" && to.name !== "signup") {
-        this.setFooterHeight();
+        try {
+          this.setFooterHeight();
+        } catch (e) {
+          this.throwAway(e);
+        }
       }
       if (to.name !== "Collection") {
         // remove set category if not visiting collections page

@@ -9,7 +9,7 @@
           text
           :color="$store.state.black"
           v-on="on"
-          @click="expanded = true"
+          @click="expanded = !expanded"
         >
           My Account
           <v-icon>
@@ -66,6 +66,7 @@ export default {
     logout() {
       this.$store.commit("setUser", null);
       localStorage.removeItem("token");
+      this.$router.push("/login");
     },
     toggleAddResource() {
       this.$store.commit("setModal", "resourceModal");
