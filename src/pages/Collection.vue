@@ -24,7 +24,7 @@ export default {
       cookieCategory: null
     };
   },
-  async mounted() {
+  mounted() {
     const cookieCategory = JSON.parse(localStorage.getItem("category"));
     if (this.current) {
       localStorage.setItem("category", JSON.stringify(this.current));

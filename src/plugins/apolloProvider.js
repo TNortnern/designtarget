@@ -8,7 +8,7 @@ Vue.use(VueApollo);
 
 export const apolloClient = new ApolloClient({
   link: createUploadLink({
-    uri: "https://api-designtarget.herokuapp.com/graphql",
+    uri: "http://localhost:5000/graphql",
     headers: {
       Authorization: `Bearer ${token}`
     }

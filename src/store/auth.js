@@ -10,6 +10,7 @@ const state = () => ({
 
 const actions = {
   async getUserResources({ commit }, id) {
+    console.log('this happened')
     await apolloClient
       .query({
         query: USER_QUERY,
@@ -18,6 +19,7 @@ const actions = {
         }
       })
       .then(({ data }) => {
+        console.log('data', data)
         commit("setUser", data.user);
       })
       .catch(err => {

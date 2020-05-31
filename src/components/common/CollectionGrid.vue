@@ -6,6 +6,7 @@
         :key="i"
         :item="item"
         lg="3"
+        :isUsers="true"
       />
     </v-row>
   </div>
@@ -21,6 +22,10 @@ export default {
     collection: {
       type: Array,
       default: () => {}
+    },
+    isUsers: {
+      type: Boolean,
+      default: false
     }
   }
 };

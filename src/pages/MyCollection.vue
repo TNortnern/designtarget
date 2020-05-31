@@ -7,7 +7,7 @@
       />
       <v-container v-if="resources">
         <h1 class="mb-3">My Collection</h1>
-        <CollectionGrid :collection="resources" />
+        <CollectionGrid :collection="resources" :isUsers="true" />
       </v-container>
     </template>
   </Layout>
@@ -23,11 +23,11 @@ export default {
     };
   },
   async mounted() {
-    if (!this.mine && !this.$store.state.auth.loading) {
-      this.$router.push("/");
-    } else {
+    if (this.mine && !this.mine.resources) {
       await this.$store.dispatch("getUserResources", this.mine.id);
     }
+    console.log("this.mine", this.mine);
+    console.log("this.resources", this.resources);
   },
   components: {
     Layout
@@ -38,6 +38,12 @@ export default {
     },
     mine() {
       return this.$store.state.auth.user;
+    }
+  },
+  watch: {
+    mine(newval, oldval) {
+      if (newval) console.log("newval", newval);
+      if (oldval) console.log("oldval", oldval);
     }
   }
 };

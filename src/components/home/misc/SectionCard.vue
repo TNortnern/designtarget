@@ -75,6 +75,10 @@ export default {
     lg: {
       type: [Number, String],
       default: 2
+    },
+    isUsers: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -109,22 +113,16 @@ export default {
             id: this.isFavorited,
             resource: this.item.id,
             user: this.authedUser.id
-          }
+          },
+          fetchPolicy: "no-cache"
         })
-        .then(async () => {
+        .then(({ data }) => {
+          this.$store.commit("setUser", data.toggleLike);
           this.$store.dispatch("getTopFour", {});
           if (this.current)
             this.$store.dispatch("getCategoryResources", this.current.id);
-          await this.$store.dispatch(
-            "getUserResources",
-            this.$store.state.auth.user.id
-          );
         })
         .catch(err => {
-          this.$store.dispatch(
-            "getUserResources",
-            this.$store.state.auth.user.id
-          );
           console.log(err);
         });
     }
@@ -139,7 +137,7 @@ export default {
       return like.id;
     },
     isFilled() {
-      return this.isFavorited || this.tempFill;
+      return this.isFavorited || this.tempFill || this.isUsers;
     },
     authedUser() {
       return this.$store.state.auth.user;

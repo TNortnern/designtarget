@@ -4,17 +4,23 @@ export const TOGGLE_LIKE = gql`
   mutation($id: ID, $user: ID, $resource: ID) {
     toggleLike(id: $id, user: $user, resource: $resource) {
       id
-      name
-      description
-      url
-      likes {
-        user {
+      email
+      isAdmin
+      resources {
+        id
+        name
+        likes {
           id
+          isLiked
+          user {
+            id
+          }
         }
-      }
-      image {
-        url
-        alt
+        image {
+          url
+          alt
+        }
+        description
       }
     }
   }
