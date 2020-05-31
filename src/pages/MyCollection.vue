@@ -51,7 +51,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "../styles/index.scss";
-.container {
-  max-width: 1640px !important;
-}
 </style>
