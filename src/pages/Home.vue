@@ -12,7 +12,7 @@
           <template v-if="searchItems.length">
             <CollectionGrid :collection="searchItems" />
           </template>
-          <template>
+          <template v-else>
             <h3>No resources found</h3>
           </template>
         </v-container>
