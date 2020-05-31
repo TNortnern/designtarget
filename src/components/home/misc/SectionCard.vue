@@ -1,67 +1,69 @@
 <template>
-  <v-col cols="11" sm="6" md="3" :lg="lg" xl="2">
-    <div class="text-center">
-      <v-btn
-        v-if="$store.state.auth.user && $store.state.auth.user.isAdmin"
-        @click="deletePrompt = true"
-        icon
-      >
-        <v-icon color="red">
-          close
-        </v-icon>
-      </v-btn>
-    </div>
-    <v-dialog v-model="deletePrompt" width="250">
-      <v-card>
-        <v-card-title class="headline grey lighten-2" primary-title>
-          Delete {{ item.name }}?
-        </v-card-title>
+  <transition name="fade">
+    <v-col cols="11" sm="6" md="3" :lg="lg" xl="2">
+      <div class="text-center">
+        <v-btn
+          v-if="$store.state.auth.user && $store.state.auth.user.isAdmin"
+          @click="deletePrompt = true"
+          icon
+        >
+          <v-icon color="red">
+            close
+          </v-icon>
+        </v-btn>
+      </div>
+      <v-dialog v-model="deletePrompt" width="250">
+        <v-card>
+          <v-card-title class="headline grey lighten-2" primary-title>
+            Delete {{ item.name }}?
+          </v-card-title>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            text
-            @click="deleteItem(), (deletePrompt = false)"
-          >
-            Yes
-          </v-btn>
-          <v-btn color="primary" text @click="deletePrompt = false">
-            No
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <a :href="`//${item.url}`" target="__blank">
-      <img
-        :src="item.image.url"
-        :alt="item.image.alt || item.name"
-        class="d-block section-card__clickable"
-      />
-    </a>
-    <v-container style="position: relative">
-      <v-row justify="space-between" align="center">
-        <h3>{{ item.name }}</h3>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="primary"
+              text
+              @click="deleteItem(), (deletePrompt = false)"
+            >
+              Yes
+            </v-btn>
+            <v-btn color="primary" text @click="deletePrompt = false">
+              No
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <a :href="`//${item.url}`" target="__blank">
+        <img
+          :src="item.image.url"
+          :alt="item.image.alt || item.name"
+          class="d-block section-card__clickable"
+        />
+      </a>
+      <v-container style="position: relative">
+        <v-row justify="space-between" align="center">
+          <h3>{{ item.name }}</h3>
 
-        <div class="align-self-end">
-          <v-btn
-            @mouseover="toggleHovered(true)"
-            @mouseout="toggleHovered(false)"
-            @click="favorite()"
-            icon
-          >
-            <v-icon :color="isFilled ? 'red' : 'black'">
-              <template v-if="isFilled">favorite</template>
-              <template v-else>favorite_border</template>
-            </v-icon>
-          </v-btn>
-        </div>
-      </v-row>
-    </v-container>
-    <p>
-      {{ item.description }}
-    </p>
-  </v-col>
+          <div class="align-self-end">
+            <v-btn
+              @mouseover="toggleHovered(true)"
+              @mouseout="toggleHovered(false)"
+              @click="favorite()"
+              icon
+            >
+              <v-icon :color="isFilled ? 'red' : 'black'">
+                <template v-if="isFilled">favorite</template>
+                <template v-else>favorite_border</template>
+              </v-icon>
+            </v-btn>
+          </div>
+        </v-row>
+      </v-container>
+      <p>
+        {{ item.description }}
+      </p>
+    </v-col>
+  </transition>
 </template>
 
 <script>
@@ -86,7 +88,8 @@ export default {
       heartHovered: false,
       tempFill: false,
       deleting: null,
-      deletePrompt: false
+      deletePrompt: false,
+      likeData: null
     };
   },
   methods: {
@@ -104,37 +107,53 @@ export default {
         this.$router.push("/login");
         return;
       }
+      this.$store.commit("setAppLoading", true);
       if (!this.isFavorited) this.tempFill = true;
       else this.tempFill = false;
       await this.$apollo
         .mutate({
           mutation: TOGGLE_LIKE,
           variables: {
-            id: this.isFavorited,
+            id: this.likeData ? this.likeData.id : undefined,
             resource: this.item.id,
             user: this.authedUser.id
           },
           fetchPolicy: "no-cache"
         })
         .then(({ data }) => {
-          this.$store.commit("setUser", data.toggleLike);
-          this.$store.dispatch("getTopFour", {});
-          if (this.current)
-            this.$store.dispatch("getCategoryResources", this.current.id);
+          console.log("data", data);
+          this.$store.commit("setAppLoading", false);
+          this.$store.commit("setUser", data.toggleLike.user);
+          this.likeData = data.toggleLike.like;
         })
         .catch(err => {
+          this.$store.commit("setAppLoading", false);
           console.log(err);
         });
     }
   },
   computed: {
     isFavorited() {
-      if (!this.item) return undefined;
+      if (this.likeData) {
+        if (this.likeData.isLiked) {
+          return this.likeData;
+        }
+      }
       const likes = this.item.likes;
-      if (!likes || !likes.length || !this.authedUser) return undefined;
-      const like = likes.find(each => each.user.id === this.authedUser.id);
-      if (!like) return undefined;
-      return like.id;
+      if (!likes || !this.authedUser) {
+        return undefined;
+      }
+      if (!this.authedUser.resources || !this.authedUser.resources.length) {
+        return undefined;
+      }
+      const isUsersResource = this.authedUser.resources.find(
+        each => each.id === this.item.id
+      );
+      if (isUsersResource) {
+        isUsersResource.likes.find(like => like.user.id === this.item.id);
+      }
+      if (!isUsersResource) return undefined;
+      return isUsersResource;
     },
     isFilled() {
       return this.isFavorited || this.tempFill || this.isUsers;
