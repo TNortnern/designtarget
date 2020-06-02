@@ -6,6 +6,22 @@ export const REGISTER = gql`
       user {
         id
         email
+        resources {
+          id
+          name
+          likes {
+            id
+            isLiked
+            user {
+              id
+            }
+          }
+          image {
+            url
+            alt
+          }
+          description
+        }
       }
       token
     }

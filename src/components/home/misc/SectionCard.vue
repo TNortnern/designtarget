@@ -149,16 +149,12 @@ export default {
           return undefined;
         }
       }
-      // why go further if the item hasn't been  liked before?
-      const likes = this.item.likes;
-      if (!likes || !this.authedUser) {
-        return undefined;
-      }
       if (this.authedUser) {
         // just check if one if the likes contain the user id
-        const isUsersResource = likes.find(
-          l => l.user.id === this.authedUser.id
+        const isUsersResource = this.authedUser.resources.find(
+          one => one.id === this.item.id
         );
+        console.log('isUsersResource', isUsersResource)
         if (isUsersResource) {
           return isUsersResource;
         }

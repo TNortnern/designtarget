@@ -7,6 +7,22 @@ export const LOGIN_QUERY = gql`
         id
         email
         isAdmin
+        resources {
+          id
+          name
+          likes {
+            id
+            isLiked
+            user {
+              id
+            }
+          }
+          image {
+            url
+            alt
+          }
+          description
+        }
       }
       token
     }
