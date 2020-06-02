@@ -126,6 +126,9 @@ p {
   @include sm() {
     @include relativeButton();
   }
+  @include md() {
+    @include relativeButton();
+  }
   position: absolute;
   width: 125px;
   right: 0%;
