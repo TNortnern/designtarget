@@ -141,6 +141,7 @@ export default {
   },
   computed: {
     isFavorited() {
+      // likeData is the data that gets returned on a like, updates the status easier
       if (this.likeData) {
         if (this.likeData.isLiked) {
           return this.likeData;
@@ -148,21 +149,21 @@ export default {
           return undefined;
         }
       }
+      // why go further if the item hasn't been  liked before?
       const likes = this.item.likes;
       if (!likes || !this.authedUser) {
         return undefined;
       }
-      if (!this.authedUser.resources || !this.authedUser.resources.length) {
-        return undefined;
+      if (this.authedUser) {
+        // just check if one if the likes contain the user id
+        const isUsersResource = likes.find(
+          l => l.user.id === this.authedUser.id
+        );
+        if (isUsersResource) {
+          return isUsersResource;
+        }
       }
-      const isUsersResource = this.authedUser.resources.find(
-        each => each.id === this.item.id
-      );
-      if (isUsersResource) {
-        isUsersResource.likes.find(like => like.user.id === this.item.id);
-      }
-      if (!isUsersResource) return undefined;
-      return isUsersResource;
+      return undefined;
     },
     isFilled() {
       return this.isFavorited || this.tempFill || this.isUsers;

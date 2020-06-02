@@ -70,7 +70,7 @@ export default {
         })
         .then(({ data }) => {
           this.loading = false;
-          console.log(data);
+          // console.log(data);
           this.$store.commit("setUser", data.login.user);
           localStorage.setItem("token", data.login.token);
           this.$router.push("/");

@@ -25,7 +25,7 @@ const actions = {
       .then(({ data }) => {
         commit("setLoading", false);
         commit("setAppLoading", false, { root: true });
-        console.log("data", data);
+        // console.log("data", data);
         commit("setSearchItems", data.resourcesLike);
       })
       .catch(err => {

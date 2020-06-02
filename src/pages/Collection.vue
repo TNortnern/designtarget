@@ -1,13 +1,20 @@
 <template>
   <Layout>
-    <template v-if="current">
+    <template>
       <vue-headful
+        v-if="current"
         :title="`Collection - ${capitalize(current.name)}`"
         :description="
           `Design Target's collection of ${capitalize(current.name)}`
         "
       />
-      <v-container v-if="resources && !loadingResources">
+      <vue-headful
+        :title="`Collection`"
+        :description="`Design Target's collection`"
+      />
+      <v-container
+        v-if="current && resources && resources.length && !loadingResources"
+      >
         <h1 class="mb-3">{{ capitalize(current.name) }}</h1>
         <CollectionGrid :collection="resources" />
       </v-container>

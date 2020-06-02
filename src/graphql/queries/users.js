@@ -47,6 +47,7 @@ export const USER_QUERY = gql`
       resources {
         id
         name
+        url
         likes {
           id
           isLiked
