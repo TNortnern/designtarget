@@ -10,12 +10,12 @@ const state = () => ({
 });
 
 const actions = {
-  async searchResources({ commit, state }) {
+  searchResources({ commit, state }) {
     commit("setSearching", true);
     commit("setLoading", true);
     commit("setCurrentTerm", state.term);
     commit("setAppLoading", true, { root: true });
-    await apolloClient
+    apolloClient
       .query({
         query: SEARCH_RESOURCES,
         variables: {

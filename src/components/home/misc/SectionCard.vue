@@ -154,7 +154,7 @@ export default {
         const isUsersResource = this.authedUser.resources.find(
           one => one.id === this.item.id
         );
-        console.log('isUsersResource', isUsersResource)
+        // console.log('isUsersResource', isUsersResource)
         if (isUsersResource) {
           return isUsersResource;
         }

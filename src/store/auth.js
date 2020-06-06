@@ -13,8 +13,8 @@ const actions = {
     commit("setUser", null);
     localStorage.removeItem("token");
   },
-  async getUserResources({ commit }, id) {
-    await apolloClient
+  getUserResources({ commit }, id) {
+    apolloClient
       .query({
         query: USER_QUERY,
         variables: {
@@ -29,19 +29,17 @@ const actions = {
       });
   },
   async getUserByToken({ commit }, token) {
-    await apolloClient
-      .query({
+    try {
+      const { data } = await apolloClient.query({
         query: USER_BY_TOKEN_QUERY,
         variables: {
           token
         }
-      })
-      .then(({ data }) => {
-        commit("setUser", data.user);
-      })
-      .catch(err => {
-        console.log("err", err);
       });
+      commit("setUser", data.user);
+    } catch (err) {
+      console.log("err", err);
+    }
   }
 };
 

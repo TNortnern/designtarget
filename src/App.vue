@@ -40,19 +40,19 @@ export default {
       if (document.querySelector("footer"))
         this.footerHeight = document.querySelector("footer").offsetHeight;
     }
-    if (!this.$store.state.categories.topFour.length) this.setTopFour();
     if (!this.$store.state.auth.user) this.getUser();
+    if (!this.$store.state.categories.topFour.length) this.setTopFour();
   },
   methods: {
     setFooterHeight() {
       const footer = document.querySelector("footer").offsetHeight;
       this.footerHeight = footer;
     },
-    async setTopFour() {
+    setTopFour() {
       this.$store.dispatch("getTopFour", {});
     },
-    async getUser() {
-      await this.$apollo
+    getUser() {
+      this.$apollo
         .query({
           query: USER_BY_TOKEN_QUERY,
           variables: {

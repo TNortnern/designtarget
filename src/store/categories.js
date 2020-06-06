@@ -17,13 +17,13 @@ const state = () => ({
 });
 
 const actions = {
-  async createNewResource(
+  createNewResource(
     { dispatch, commit },
     { name, description, category, image, alt, importance, url }
   ) {
     commit("setLoading", { value: true, name: "resource" });
     commit("setMessage", { text: "", name: "resource" });
-    await apolloClient
+    apolloClient
       .mutate({
         mutation: CREATE_RESOURCE,
         variables: {
@@ -48,8 +48,8 @@ const actions = {
     dispatch("getTopFour");
     if (state.current) dispatch("getCategoryResources", state.current.id);
   },
-  async deleteResource({ dispatch }, id) {
-    await apolloClient
+  deleteResource({ dispatch }, id) {
+    apolloClient
       .mutate({
         mutation: DELETE_RESOURCE,
         variables: {
@@ -62,20 +62,24 @@ const actions = {
       .catch(err => {
         alert("err", err);
       });
-    await dispatch("getTopFour");
-    if (state.current) await dispatch("getCategoryResources", state.current.id);
+    dispatch("getTopFour");
+    if (state.current) dispatch("getCategoryResources", state.current.id);
   },
   async getTopFour({ commit }) {
-    const { data } = await apolloClient.query({
-      query: TOP_FOUR_QUERY
-    });
-    commit("setTopFour", data.categories);
+    try {
+      const { data } = await apolloClient.query({
+        query: TOP_FOUR_QUERY
+      });
+      commit("setTopFour", data.categories);
+    } catch (err) {
+      console.log("err", err);
+    }
   },
-  async getCategoryResources({ commit }, name) {
+  getCategoryResources({ commit }, name) {
     commit("setLoading", { value: true, name: "loadingCategoryResources" });
     commit("setAppLoading", true, { root: true });
     commit("setAppLoading", false, { root: true });
-    await apolloClient
+    apolloClient
       .query({
         query: CATEGORY_QUERY,
         variables: {
@@ -89,7 +93,7 @@ const actions = {
           name: "loadingCategoryResources"
         });
         commit("setAllResources", data.category.resources);
-        commit("setCurrent", data.category)
+        commit("setCurrent", data.category);
       })
       .catch(err => {
         commit("setAppLoading", false, { root: true });
@@ -100,10 +104,10 @@ const actions = {
         console.log("err", err);
       });
   },
-  async createNewCategory({ dispatch, commit }, { name, description }) {
+  createNewCategory({ dispatch, commit }, { name, description }) {
     commit("setLoading", { value: true, name: "category" });
     commit("setMessage", { text: "", name: "category" });
-    await apolloClient
+    apolloClient
       .mutate({
         mutation: CREATE_CATEGORY,
         variables: {
@@ -123,8 +127,8 @@ const actions = {
     dispatch("getTopFour");
     if (state.current) dispatch("getCategoryResources", state.current.id);
   },
-  async deleteCategory({ dispatch }, id) {
-    await apolloClient
+  deleteCategory({ dispatch }, id) {
+    apolloClient
       .mutate({
         mutation: DELETE_CATEGORY,
         variables: {
@@ -137,8 +141,8 @@ const actions = {
       .catch(err => {
         alert("err", err);
       });
-    await dispatch("getTopFour");
-    if (state.current) await dispatch("getCategoryResources", state.current.id);
+    dispatch("getTopFour");
+    if (state.current) dispatch("getCategoryResources", state.current.id);
   }
 };
 
