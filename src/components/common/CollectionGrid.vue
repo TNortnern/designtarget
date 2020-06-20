@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row v-if="collection.length">
+    <v-row justify="center" justify-md="start" v-if="collection.length">
       <SectionCard
         v-for="(item, i) in collection"
         :key="i"

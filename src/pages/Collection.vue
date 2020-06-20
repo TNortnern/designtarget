@@ -15,7 +15,9 @@
       <v-container
         v-if="current && resources && resources.length && !loadingResources"
       >
-        <h1 class="mb-3">{{ capitalize(current.name) }}</h1>
+        <h1 class="mb-3 text-center text-sm-left">
+          {{ capitalize(current.name) }}
+        </h1>
         <CollectionGrid :collection="resources" />
       </v-container>
       <template v-else>

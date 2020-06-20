@@ -6,7 +6,7 @@
     />
     <v-container v-if="resources">
       <template v-if="resources.length">
-        <h1 class="mb-3">My Collection</h1>
+        <h1 class="mb-3 text-center text-sm-left">My Collection</h1>
         <CollectionGrid :collection="resources" :isUsers="true" />
       </template>
       <template v-else>
