@@ -111,6 +111,7 @@ export default {
       this.$store.dispatch("deleteResource", this.item.id);
     },
     async favorite() {
+      if (this.$store.state.appLoading) return;
       if (!this.$store.state.auth.user) {
         this.$router.push("/login");
         return;
