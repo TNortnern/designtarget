@@ -1,6 +1,6 @@
 <template>
   <v-container :class="classes">
-    <v-row>
+    <v-row justify="center" justify-lg="start">
       <SkeletonCard v-for="(skeleton, i) in 4" :key="i" />
     </v-row>
   </v-container>
