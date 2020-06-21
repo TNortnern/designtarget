@@ -183,12 +183,12 @@ export default {
 img {
   width: 100%;
   @include xl() {
-    width: 277px;
+    width: 386px;
   }
 }
 .section-card__like {
   @include xl() {
-    max-width: 277px;
+    max-width: 386px;
   }
 }
 h3 {
