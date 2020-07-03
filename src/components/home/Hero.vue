@@ -90,6 +90,9 @@ export default {
 .hero {
   background-color: #272727;
   color: #ffffff;
+  @include xs() {
+    border-radius: 0px;
+  }
   border-radius: 5px;
   @include xl() {
     height: 468px;

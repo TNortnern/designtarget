@@ -13,9 +13,9 @@
           :to="link.href"
           active-class="drawer__link-active"
         >
-          <v-list-item-icon>
+          <!-- <v-list-item-icon>
             <v-icon>{{ link.icon }}</v-icon>
-          </v-list-item-icon>
+          </v-list-item-icon> -->
           <v-list-item-title>{{ link.name }} </v-list-item-title>
         </v-list-item>
         <MobileAuthRoutes />

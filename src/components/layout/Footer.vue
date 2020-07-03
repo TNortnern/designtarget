@@ -70,6 +70,10 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles";
 footer {
+  margin-bottom: 15px;
+  @include xs() {
+    border-radius: 0px;
+  }
   border-radius: 5px;
   color: #ffffff;
   @include xl() {

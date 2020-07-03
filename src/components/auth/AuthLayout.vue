@@ -37,6 +37,11 @@
                   {{ cta.message }}
                   <b @click="$router.push(cta.route)">{{ cta.name }}</b></span
                 >
+                <div class="mt-2">
+                  <router-link class="auth-layout__back-to-home" to="/"
+                    >Back to Home</router-link
+                  >
+                </div>
               </div>
             </div>
           </form>
@@ -111,6 +116,12 @@ b {
   cursor: pointer;
   &:hover {
     color: lighten(black, 34%);
+  }
+}
+.auth-layout__back-to-home {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
   }
 }
 </style>
