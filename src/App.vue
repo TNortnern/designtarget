@@ -83,11 +83,22 @@ export default {
         if (this.$store.state.categories.current)
           this.$store.commit("setCurrent", null);
       }
+    },
+    user(val) {
+      if (val) {
+        // specifically here to reset the footer height of auth guarded pages
+        setInterval(() => {
+          this.setFooterHeight();
+        }, 1);
+      }
     }
   },
   computed: {
     routeName() {
       return this.$route.name;
+    },
+    user() {
+      return this.$store.state.auth.user;
     }
   }
 };
