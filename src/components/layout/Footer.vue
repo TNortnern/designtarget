@@ -22,9 +22,12 @@
       </v-col>
       <v-col cols="6" sm="2">
         <div v-for="link in linksTwo" :key="link.name">
-          <router-link class="d-i-block" :to="link.href">
+          <router-link class="d-i-block" :to="link.href" v-if="!link.external">
             {{ link.name }}
           </router-link>
+          <a :href="link.href" target="_blank" v-else>
+            {{ link.name }}
+          </a>
         </div>
       </v-col>
       <v-col sm="4">
@@ -47,15 +50,23 @@
 export default {
   data: () => ({
     linksOne: [
-      { name: "Images", href: "#images" },
-      { name: "Fonts", href: "#fonts" },
-      { name: "Illustrations", href: "#illustrations" },
-      { name: "Videos", href: "#videos" },
-      { name: "Landing Pages", href: "#landing" }
+      { name: "Images", href: "/collection/images" },
+      { name: "Fonts", href: "/collection/fonts" },
+      { name: "Illustrations", href: "/collection/illustrations" },
+      { name: "Videos", href: "/collection/videos" },
+      { name: "Landing Pages", href: "/collection/landingpages" }
     ],
     linksTwo: [
-      { name: "Facebook", href: "#facebook" },
-      { name: "Twitter", href: "#twitter" }
+      {
+        name: "Facebook",
+        href: "https://facebook.com/designtargetresources",
+        external: true
+      },
+      {
+        name: "Twitter",
+        href: "https://twitter.com/search?q=designtarget&src=typed_query",
+        external: true
+      }
     ]
   }),
   props: {
