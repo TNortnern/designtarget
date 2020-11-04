@@ -200,6 +200,8 @@ h3 {
 .section-card__clickable {
   transition: 0.25s ease;
   opacity: 0.91;
+  width: 100%;
+  height: 6.3rem;
   cursor: pointer;
   &:hover {
     opacity: 1;
