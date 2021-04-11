@@ -1,73 +1,67 @@
 <template>
-  <transition name="fade">
-    <v-col cols="11" sm="6" md="3" :lg="lg" :xl="xl">
-      <div class="text-center">
-        <v-btn
-          v-if="$store.state.auth.user && $store.state.auth.user.isAdmin"
-          @click="deletePrompt = true"
-          icon
-        >
-          <v-icon color="red">
-            close
-          </v-icon>
-        </v-btn>
-      </div>
-      <v-dialog v-model="deletePrompt" width="250">
-        <v-card>
-          <v-card-title class="headline grey lighten-2" primary-title>
-            Delete {{ item.name }}?
-          </v-card-title>
+  <v-col cols="11" sm="6" md="3" :lg="lg" :xl="xl">
+    <div class="text-center">
+      <v-btn
+        v-if="$store.state.auth.user && $store.state.auth.user.isAdmin"
+        @click="deletePrompt = true"
+        icon
+      >
+        <v-icon color="red">
+          close
+        </v-icon>
+      </v-btn>
+    </div>
+    <v-dialog v-model="deletePrompt" width="250">
+      <v-card>
+        <v-card-title class="headline grey lighten-2" primary-title>
+          Delete {{ item.name }}?
+        </v-card-title>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              color="primary"
-              text
-              @click="deleteItem(), (deletePrompt = false)"
-            >
-              Yes
-            </v-btn>
-            <v-btn color="primary" text @click="deletePrompt = false">
-              No
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-      <a :href="`//${item.url}`" target="__blank">
-        <img
-          :src="item.image.url"
-          :alt="item.image.alt || item.name"
-          class="d-block section-card__clickable"
-        />
-      </a>
-      <v-container style="position: relative">
-        <v-row
-          class="section-card__like"
-          justify="space-between"
-          align="center"
-        >
-          <h3>{{ item.name }}</h3>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="deleteItem(), (deletePrompt = false)"
+          >
+            Yes
+          </v-btn>
+          <v-btn color="primary" text @click="deletePrompt = false">
+            No
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <a :href="`//${item.url}`" target="__blank">
+      <img
+        :src="item.image.url"
+        :alt="item.image.alt || item.name"
+        class="d-block section-card__clickable"
+      />
+    </a>
+    <v-container style="position: relative">
+      <v-row class="section-card__like" justify="space-between" align="center">
+        <h3>{{ item.name }}</h3>
 
-          <div class="align-self-end">
-            <v-btn
-              @mouseover="toggleHovered(true)"
-              @mouseout="toggleHovered(false)"
-              @click="favorite()"
-              icon
-            >
-              <v-icon :color="isFilled ? 'red' : 'black'">
-                <template v-if="isFilled">favorite</template>
-                <template v-else>favorite_border</template>
-              </v-icon>
-            </v-btn>
-          </div>
-        </v-row>
-      </v-container>
-      <p>
-        {{ item.description }}
-      </p>
-    </v-col>
-  </transition>
+        <div class="align-self-end">
+          <v-btn
+            @mouseover="toggleHovered(true)"
+            @mouseout="toggleHovered(false)"
+            @click="favorite()"
+            icon
+          >
+            <v-icon :color="isFilled ? 'red' : 'black'">
+              <template v-if="isFilled">favorite</template>
+              <template v-else>favorite_border</template>
+            </v-icon>
+          </v-btn>
+        </div>
+      </v-row>
+    </v-container>
+    <p>
+      {{ item.description }}
+    </p>
+  </v-col>
 </template>
 
 <script>

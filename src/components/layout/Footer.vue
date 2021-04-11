@@ -15,8 +15,12 @@
       </v-col>
       <v-col cols="6" sm="2">
         <div v-for="link in linksOne" :key="link.name">
-          <router-link class="d-i-block" :to="link.href">
-            {{ link.name }}
+          <router-link
+            class="d-i-block"
+            :to="!link.comingSoon ? link.href : '#'"
+          >
+            {{ link.name
+            }}<template v-if="link.comingSoon">(coming soon)</template>
           </router-link>
         </div>
       </v-col>
@@ -50,11 +54,15 @@
 export default {
   data: () => ({
     linksOne: [
-      { name: "Images", href: "/collection/images" },
-      { name: "Fonts", href: "/collection/fonts" },
       { name: "Illustrations", href: "/collection/illustrations" },
-      { name: "Videos", href: "/collection/videos" },
-      { name: "Landing Pages", href: "/collection/landingpages" }
+      { name: "Images", href: "/collection/images" },
+      { name: "Icons", href: "/collection/icons" },
+      { name: "Videos", href: "/collection/videos", comingSoon: true },
+      {
+        name: "Landing Pages",
+        href: "/collection/landingpages",
+        comingSoon: true
+      }
     ],
     linksTwo: [
       {
